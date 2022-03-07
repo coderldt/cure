@@ -64,7 +64,7 @@ export default defineComponent({
     .back {
       margin-right: 10px;
       cursor: pointer;
-      font-size: 20px;
+      font-size: 14px;
     }
   }
 

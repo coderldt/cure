@@ -8,7 +8,7 @@ function getStore(key: string): any {
 }
 
 function setStore(key: string, value: any): void {
-  if (key && value) {
+  if (key) {
     window.localStorage.setItem(key, JSON.stringify(value));
   }
 }

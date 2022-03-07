@@ -4,7 +4,9 @@
     <div class="search">
       <el-form :model="form" inline>
         <el-form-item label="类型" prop="typeId">
-          <el-input v-model="form.typeId" placeholder="请输入" />
+          <el-select v-model="form.typeId">
+            <el-option v-for="(item, index) in typeList" :key="index" :label="item.label" :value="item.value" />
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">查询</el-button>
@@ -15,15 +17,9 @@
     <div class="content">
       <el-row :gutter="20">
         <el-col :span="24">
-          <Table :column="tableColumn" :list="list" :total="total" @onPaginationChange="onPaginationChange">
+          <Table v-loading="isLoading" :column="tableColumn" :list="list" :total="total" @onPaginationChange="onPaginationChange">
             <template #control="{ row }">
-              <el-button type="text" @click="update(row)"> 编辑 </el-button>
-              <el-button type="text" @click="options(row)"> 选项 </el-button>
-              <el-popconfirm confirm-button-text="确认" cancel-button-text="取消" title="确认删除该文章?" @confirm="dele(row.id)">
-                <template #reference>
-                  <el-button type="text"> 删除 </el-button>
-                </template>
-              </el-popconfirm>
+              <el-button type="text" @click="analysis(row)"> 解析 </el-button>
             </template>
           </Table>
         </el-col>
@@ -34,6 +30,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, Ref, ref } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import { statusList } from "@/config/system";
 import { ElMessage } from "element-plus";
 // import Edit from "./edit.vue";
@@ -66,6 +64,9 @@ export default defineComponent({
     // Edit,
   },
   setup() {
+    const store = useStore();
+    const typeList = store.state.question.typeList;
+
     const form: Form = reactive({
       typeId: "",
     });
@@ -92,16 +93,18 @@ export default defineComponent({
     };
 
     const tableColumn: TableColumn[] = [
-      { label: "类型", prop: "typeId", width: "", align: "center" },
+      { label: "类型", prop: "title", width: "", align: "center" },
       { label: "操作", align: "center", slot: "control" },
     ];
 
     let list: Ref<List[]> = ref([]);
     onMounted(() => {
-      // getList();
+      getList();
     });
 
+    const isLoading: Ref<boolean> = ref(false);
     const getList = async () => {
+      isLoading.value = true;
       const res: any = await getData({ ...form, ...page.value });
       if (res.code === 200) {
         list.value = res.data.result;
@@ -109,6 +112,7 @@ export default defineComponent({
         page.value.pageNum = res.data.pageNum;
         page.value.pageSize = res.data.pageSize;
       }
+      isLoading.value = false;
     };
 
     const modelDetail: Ref<ModelDetail> = ref({
@@ -131,7 +135,14 @@ export default defineComponent({
       }
     };
 
+    const router = useRouter();
+    const analysis = (row: List) => {
+      router.push(`/question/analysis/${row.typeId}/${row.title}`);
+    };
+
     return {
+      isLoading,
+      typeList,
       form,
       search,
       reset,
@@ -144,6 +155,7 @@ export default defineComponent({
       total,
       onPaginationChange,
       tableColumn,
+      analysis,
     };
   },
 });

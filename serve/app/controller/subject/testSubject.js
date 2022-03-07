@@ -8,7 +8,7 @@ class TestSubjectController extends BaseController {
   }
 
   async list() {
-    const { title, pageNum, pageSize } = this.ctx.request.body;
+    const { title, typeId, pageNum, pageSize } = this.ctx.request.body;
     const querytables = [
       {
         table: 'test_subject',
@@ -18,6 +18,9 @@ class TestSubjectController extends BaseController {
     ];
     if (title) {
       querytables[0].vagueCon.title = title;
+    }
+    if (typeId) {
+      querytables[0].vagueCon.typeId = typeId;
     }
     const res = await this.service.multiTableQuery(querytables, [], { pageNum, pageSize });
     if (res.code === 200) {

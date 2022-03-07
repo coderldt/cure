@@ -11,7 +11,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="isOpen = false">取消</el-button>
-        <el-button type="primary" @click="submit">{{ detail.id ? "修改" : "添加" }}</el-button>
+        <el-button type="primary" :loading="isLoading" @click="submit">{{ detail.id ? "修改" : "添加" }}</el-button>
       </span>
     </template>
   </el-dialog>
@@ -60,8 +60,10 @@ export default defineComponent({
       value: [{ required: true, message: "英文值不可为空", trigger: "blur" }],
     });
 
+    const isLoading: Ref<boolean> = ref(false);
     const submit = async () => {
       let res: any = null;
+      isLoading.value = true;
       if (form.value.id) {
         res = await update(form.value);
       } else {
@@ -75,9 +77,11 @@ export default defineComponent({
       } else {
         ElMessage.error("操作失败");
       }
+      isLoading.value = false;
     };
 
     return {
+      isLoading,
       isOpen,
       detail: data,
       form,

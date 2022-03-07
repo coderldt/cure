@@ -8,23 +8,9 @@ class SubjectAnalysisController extends BaseController {
   }
 
   async list() {
-    const { typeId, pageNum, pageSize } = this.ctx.request.body;
-    const querytables = [
-      {
-        table: 'subject_analysis',
-        keys: [ '*' ],
-        accurateCon: {},
-      },
-    ];
-    if (typeId) {
-      querytables[0].accurateCon.typeId = typeId;
-    }
-    const res = await this.service.multiTableQuery(querytables, [], { pageNum, pageSize });
-    if (res.code === 200) {
-      this.success({ data: res.data });
-    } else {
-      this.error({ msg: '查询失败' });
-    }
+    const { typeId } = this.ctx.request.body;
+    const res = await this.service.query({ typeId });
+    this.success({ data: res });
   }
 
   async add() { // 登录

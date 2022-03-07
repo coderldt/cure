@@ -11,7 +11,7 @@
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item>修改密码</el-dropdown-item>
-          <el-dropdown-item>退出登录</el-dropdown-item>
+          <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -19,12 +19,20 @@
 </template>
 <script>
 import {} from "vue";
-import { getStore } from "@/utils/store";
+import { getStore, setStore } from "@/utils/store";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const userInfo = getStore("userInfo");
+
+    const router = useRouter();
+    const logout = () => {
+      setStore("token", "");
+      router.push("/login");
+    };
     return {
       userInfo,
+      logout,
     };
   },
 };

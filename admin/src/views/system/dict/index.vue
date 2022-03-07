@@ -10,7 +10,7 @@
               <el-button @click="add">添加</el-button>
             </el-col>
           </el-row>
-          <Table :column="tableColumn" :list="list" :total="list.length" :is-pagination="false">
+          <Table v-loading="isLoading" :column="tableColumn" :list="list" :total="list.length" :is-pagination="false">
             <template #control="{ row }">
               <el-button type="text" @click="update(row)"> 修改 </el-button>
               <el-button type="text" @click="detail(row)"> 列表 </el-button>
@@ -29,7 +29,7 @@
               <el-button v-if="currentDist.id" @click="addChildren">添加</el-button>
             </el-col>
           </el-row>
-          <Table :column="tableColumn" :list="childrenList" :is-pagination="false">
+          <Table v-loading="childrenLoading" :column="tableColumn" :list="childrenList" :is-pagination="false">
             <template #control="{ row }">
               <el-popconfirm confirm-button-text="确认" cancel-button-text="取消" title="确认删除该字典?" @confirm="delChildren(row.value)">
                 <template #reference>
@@ -72,9 +72,12 @@ export default defineComponent({
     ];
     const list: Ref<Params[]> = ref([]);
 
+    const isLoading: Ref<boolean> = ref(false);
     const getList = async () => {
+      isLoading.value = true;
       const res = await getData();
       list.value = res.data as [];
+      isLoading.value = false;
     };
 
     onMounted(() => {
@@ -107,12 +110,15 @@ export default defineComponent({
 
     const childrenList: Ref<ChildrenList[]> = ref([]);
     const currentDist: Ref<Params> = ref({});
+    const childrenLoading: Ref<boolean> = ref(false);
     const detail = async (row: Params) => {
       currentDist.value = row;
+      childrenLoading.value = true;
       const res: any = await getChildrenData(row.id as number);
       if (res.code === 200) {
         childrenList.value = res.data;
       }
+      childrenLoading.value = false;
     };
     const modelChildrenDetail: Ref<ModelDetail> = ref({
       show: false,
@@ -132,7 +138,9 @@ export default defineComponent({
     };
     return {
       tableColumn,
+      isLoading,
       list,
+      childrenLoading,
       childrenList,
       add,
       update,

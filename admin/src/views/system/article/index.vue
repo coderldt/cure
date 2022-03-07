@@ -18,7 +18,7 @@
           <el-button @click="add">添加</el-button>
         </el-col>
         <el-col :span="24">
-          <Table :column="tableColumn" :list="list" :total="total" @onPaginationChange="onPaginationChange">
+          <Table v-loading="isLoading" :column="tableColumn" :list="list" :total="total" @onPaginationChange="onPaginationChange">
             <template #status="{ row }">
               <el-switch v-model="row.status" :active-value="1" :inactive-value="2" />
             </template>
@@ -112,7 +112,9 @@ export default defineComponent({
       getList();
     });
 
+    const isLoading: Ref<boolean> = ref(false);
     const getList = async () => {
+      isLoading.value = true;
       const res: any = await getData({ ...form, ...page.value });
       if (res.code === 200) {
         list.value = res.data.result;
@@ -120,6 +122,7 @@ export default defineComponent({
         page.value.pageNum = res.data.pageNum;
         page.value.pageSize = res.data.pageSize;
       }
+      isLoading.value = false;
     };
 
     const modelDetail: Ref<ModelDetail> = ref({
@@ -148,6 +151,7 @@ export default defineComponent({
     };
 
     return {
+      isLoading,
       form,
       search,
       reset,

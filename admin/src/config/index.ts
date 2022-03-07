@@ -18,7 +18,7 @@ const menu: Array<Menu> = [
   {
     title: "首页",
     icon: "House",
-    path: "/",
+    path: "/coreHome",
     id: "1",
   },
   {

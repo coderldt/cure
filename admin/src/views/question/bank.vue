@@ -7,7 +7,9 @@
           <el-input v-model="form.title" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="类型" prop="typeId">
-          <el-input v-model="form.typeId" placeholder="请输入" />
+          <el-select v-model="form.typeId">
+            <el-option v-for="(item, index) in typeList" :key="index" :label="item.label" :value="item.value" />
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">查询</el-button>
@@ -21,9 +23,9 @@
           <el-button @click="add">添加</el-button>
         </el-col>
         <el-col :span="24">
-          <Table :column="tableColumn" :list="list" :total="total" @onPaginationChange="onPaginationChange">
-            <template #status="{ row }">
-              <el-switch v-model="row.status" :active-value="1" :inactive-value="2" />
+          <Table v-loading="isLoading" :column="tableColumn" :list="list" :total="total" @onPaginationChange="onPaginationChange">
+            <template #typeId="{ row }">
+              {{ getTypeLabel(row.typeId) }}
             </template>
             <template #control="{ row }">
               <el-button type="text" @click="update(row)"> 编辑 </el-button>
@@ -43,12 +45,14 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, Ref, ref } from "vue";
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { statusList } from "@/config/system";
 import { ElMessage } from "element-plus";
 import Edit from "./edit.vue";
 import Table, { TableColumn, Pagination } from "@/components/table/index.vue";
 import { getData, del } from "@/apis/questions/bank";
+import { TypeItem } from "@/store/children/question";
 
 interface Form {
   title: string;
@@ -77,6 +81,8 @@ export default defineComponent({
     Edit,
   },
   setup() {
+    const store = useStore();
+    const typeList = store.state.question.typeList;
     const form: Form = reactive({
       title: "",
       typeId: "",
@@ -90,6 +96,14 @@ export default defineComponent({
       form.title = "";
       form.typeId = "";
       getList();
+    };
+
+    const getTypeLabel = (typeId: string) => {
+      const typeItem = typeList.find((i: TypeItem) => i.value === typeId);
+      if (typeItem) {
+        return typeItem.label;
+      }
+      return "未知类型";
     };
 
     const total = ref(0);
@@ -106,7 +120,7 @@ export default defineComponent({
 
     const tableColumn: TableColumn[] = [
       { label: "标题", prop: "title", width: "", align: "center" },
-      { label: "类型", prop: "typeId", width: "", align: "center" },
+      { label: "类型", slot: "typeId", width: "", align: "center" },
       { label: "操作", align: "center", slot: "control" },
     ];
 
@@ -115,7 +129,9 @@ export default defineComponent({
       getList();
     });
 
+    const isLoading: Ref<boolean> = ref(false);
     const getList = async () => {
+      isLoading.value = true;
       const res: any = await getData({ ...form, ...page.value });
       if (res.code === 200) {
         list.value = res.data.result;
@@ -123,6 +139,7 @@ export default defineComponent({
         page.value.pageNum = res.data.pageNum;
         page.value.pageSize = res.data.pageSize;
       }
+      isLoading.value = false;
     };
 
     const modelDetail: Ref<ModelDetail> = ref({
@@ -156,6 +173,9 @@ export default defineComponent({
     };
 
     return {
+      isLoading,
+      typeList,
+      getTypeLabel,
       form,
       search,
       reset,

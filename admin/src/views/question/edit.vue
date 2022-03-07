@@ -5,13 +5,15 @@
         <el-input v-model="form.title" placeholder="请输入" />
       </el-form-item>
       <el-form-item label="题目类型" prop="typeId">
-        <el-input v-model="form.typeId" placeholder="请输入" />
+        <el-select v-model="form.typeId">
+          <el-option v-for="(item, index) in typeList" :key="index" :label="item.label" :value="item.value" />
+        </el-select>
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="isOpen = false">取消</el-button>
-        <el-button type="primary" @click="submit">{{ detail.id ? "修改" : "添加" }}</el-button>
+        <el-button type="primary" :loading="isLoading" @click="submit">{{ detail.id ? "修改" : "添加" }}</el-button>
       </span>
     </template>
   </el-dialog>
@@ -21,6 +23,7 @@
 import { computed, defineComponent, onMounted, reactive, ref, Ref, toRefs, watch } from "vue";
 import { add, update, Subject } from "@/apis/questions/bank";
 import { ElMessage } from "element-plus";
+import { useStore } from "vuex";
 export default defineComponent({
   name: "Edit",
   props: {
@@ -45,6 +48,9 @@ export default defineComponent({
       },
     });
 
+    const store = useStore();
+    const typeList = store.state.question.typeList;
+
     watch(isOpen, (val) => {
       if (val) {
         form.value = data.value;
@@ -61,7 +67,9 @@ export default defineComponent({
       typeId: [{ required: true, message: "类型不可为空", trigger: "blur" }],
     });
 
+    const isLoading: Ref<boolean> = ref(false);
     const submit = async () => {
+      isLoading.value = true;
       let res: any = null;
       if (form.value.id) {
         res = await update(form.value);
@@ -76,9 +84,12 @@ export default defineComponent({
       } else {
         ElMessage.error("操作失败");
       }
+      isLoading.value = false;
     };
 
     return {
+      isLoading,
+      typeList,
       isOpen,
       detail: data,
       form,

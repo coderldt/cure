@@ -1,30 +1,29 @@
 import http from "../http";
 
 export interface Params {
-  title?: string;
-  typeId?: string;
-  pageNum: number;
-  pageSize: number;
+  typeId: string | number;
 }
 
 export interface Subject {
   id?: number | string;
-  title?: string;
+  score?: number;
   typeId?: string;
+  content?: string;
+  direction?: number;
 }
 
-// export function getData(data: Params) {
-//   return http.post({ url: "/testSubject/list", data });
-// }
+export function getData(data: Params) {
+  return http.post({ url: "/subjectAnalysis/list", data });
+}
 
-// export function del(id: number) {
-//   return http.post({ url: "/testSubject/delete", data: { id } });
-// }
+export function dele(id: number) {
+  return http.post({ url: "/subjectAnalysis/delete", data: { id } });
+}
 
-// export function add(data: Subject) {
-//   return http.post({ url: "/testSubject/add", data });
-// }
+export function add(data: Subject) {
+  return http.post({ url: "/subjectAnalysis/add", data });
+}
 
-// export function update(data: Subject) {
-//   return http.post({ url: "/testSubject/update", data });
-// }
+export function update(data: Subject) {
+  return http.post({ url: "/subjectAnalysis/update", data });
+}
