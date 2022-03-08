@@ -23,13 +23,12 @@ module.exports = appInfo => {
   config.middleware = [ 'tokenHandler' ];
   config.tokenHandler = {
     match(ctx) {
-      return false;
-      // // 匹配不需要验证token的路由
-      // const url = ctx.request.url;
-      // if (tokenConfig.ignoreValiPaths.some(path => url === path)) {
-      //   return false;
-      // }
-      // return true; // 开启中间件，开启token验证
+      // 匹配不需要验证token的路由
+      const url = ctx.request.url;
+      if (tokenConfig.ignoreValiPaths.some(path => url === path)) {
+        return false;
+      }
+      return true; // 开启中间件，开启token验证
     },
   };
   config.errorConfig = {
