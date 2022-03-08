@@ -45,4 +45,23 @@ module.exports = app => {
   router.post('/question/update', controller.question.index.update);
   router.post('/question/delete', controller.question.index.delete);
 
+  // 同情
+  router.post('/star/update', controller.question.star.update);
+  // 收藏/取消文章
+  router.post('/article/updateArticle', controller.sys.article.updateArticle);
+  // 点赞、取消评论回复
+  router.post('/reply/updateReply', controller.question.reply.updateReply);
+  // 点赞、取消提问
+  router.post('/question/updateQuestion', controller.question.index.updateQuestion);
+
+  // 回复评论
+  router.post('/reply/add', controller.question.reply.add);
+  router.post('/reply/delete', controller.question.reply.delete);
+
+  // 漂流瓶
+  router.post('/bottle/list', controller.bottle.index.list);
+  router.post('/bottle/add', controller.bottle.index.add);
+  router.post('/bottle/delete', controller.bottle.index.delete);
+  router.post('/bottle/reply', controller.bottle.index.reply);
+
 };

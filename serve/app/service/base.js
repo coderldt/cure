@@ -27,6 +27,7 @@ class BaseService extends Service {
   async cAddData(param) {
     try {
       const result = await this.app.mysql.insert(this.table, param);
+      console.log(result, 'result');
       if (result.affectedRows === 1) {
         return {
           code: 200,

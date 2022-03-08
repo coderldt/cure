@@ -5,6 +5,7 @@ class ArticleController extends BaseController {
   constructor(ctx) {
     super(ctx);
     this.service = ctx.service.sys.article;
+    this.userArticleservice = ctx.service.sys.articleUser;
   }
 
   async list() {
@@ -64,6 +65,33 @@ class ArticleController extends BaseController {
 
     await this.service.cDelData({ id });
     this.success({ msg: '删除成功' });
+  }
+
+  // APP
+  async updateArticle() {
+    const { articleId } = this.ctx.request.body;
+    if (!articleId) {
+      return this.error({ msg: '请选择一个文章' });
+    }
+
+    const { id } = this.ctx.userinfo;
+    const params = {
+      userId: id,
+      articleId,
+    };
+
+    const resList = await this.userArticleservice.query(params);
+    if (resList.length) {
+      await this.userArticleservice.cDelData({ id: resList[0].id });
+      this.success({ msg: '取消收藏成功' });
+    } else {
+      const res = await this.userArticleservice.add(params);
+      if (res.code === 200) {
+        this.success({ data: res.data, msg: '收藏成功' });
+      } else {
+        this.error({ msg: '出错了，请稍后再试' });
+      }
+    }
   }
 }
 

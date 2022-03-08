@@ -5,15 +5,18 @@ class QuestionController extends BaseController {
   constructor(ctx) {
     super(ctx);
     this.service = ctx.service.question.index;
+    this.questionUserservice = ctx.service.question.questionUser;
   }
 
   async list() {
     const { title, pageNum = 1 } = this.ctx.request.body;
+    const { id } = this.ctx.userinfo;
     const querytables = [
       {
         table: 'questions',
         keys: [ '*' ],
         vagueCon: {},
+        accurateCon: { userId: id },
       },
     ];
     if (title) {
@@ -78,6 +81,33 @@ class QuestionController extends BaseController {
 
     await this.service.cDelData({ id });
     this.success({ msg: '删除成功' });
+  }
+
+  // APP
+  async updateQuestion() {
+    const { questionId } = this.ctx.request.body;
+    if (!questionId) {
+      return this.error({ msg: '请选择一个提问' });
+    }
+
+    const { id } = this.ctx.userinfo;
+    const params = {
+      userId: id,
+      questionId,
+    };
+
+    const resList = await this.questionUserservice.query(params);
+    if (resList.length) {
+      await this.questionUserservice.cDelData({ id: resList[0].id });
+      this.success({ msg: '取消成功' });
+    } else {
+      const res = await this.questionUserservice.add(params);
+      if (res.code === 200) {
+        this.success({ data: res.data, msg: '点赞成功' });
+      } else {
+        this.error({ msg: '出错了，请稍后再试' });
+      }
+    }
   }
 }
 
