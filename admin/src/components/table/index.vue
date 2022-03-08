@@ -3,12 +3,12 @@
     <el-table header-cell-class-name="dark" border highlight-current-row stripe :data="list">
       <el-table-column v-if="isOrderNum" align="center" label="序号" type="index" width="50" />
       <template v-for="(item, index) in column">
-        <el-table-column v-if="item.slot" :key="'slot' + index" :label="item.label" :width="item.width" :align="item.align">
+        <el-table-column v-if="item.slot" :key="'slot' + index" :label="item.label" :width="item.width" :align="item.align" :show-overflow-tooltip="item.showOverflowTooltip">
           <template #default="{ row }">
             <slot :name="item.slot" :row="row"></slot>
           </template>
         </el-table-column>
-        <el-table-column v-else :key="index" :label="item.label" :prop="item.prop" :width="item.width" :align="item.align" />
+        <el-table-column v-else :key="index" :label="item.label" :prop="item.prop" :width="item.width" :align="item.align" :show-overflow-tooltip="item.showOverflowTooltip" />
       </template>
     </el-table>
     <el-pagination
@@ -32,6 +32,7 @@ export interface TableColumn {
   width?: string | number;
   align?: "left" | "center" | "right";
   slot?: string;
+  showOverflowTooltip?: boolean;
 }
 
 export interface Pagination {

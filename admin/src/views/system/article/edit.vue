@@ -4,9 +4,8 @@
       <el-form-item label="文章标题" prop="title">
         <el-input v-model="form.title" placeholder="请输入" />
       </el-form-item>
-      <el-form-item label="文章内容(暂时不可使用)" prop="content">
-        <Tinymce v-model:value="form.content" :height="300" />
-        <!-- <el-input v-model="form.content" placeholder="请输入" /> -->
+      <el-form-item label="文章内容" prop="content">
+        <Tinymce ref="editor" :content="form.content" @change="noticeContentChange" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -52,6 +51,7 @@ export default defineComponent({
     watch(isOpen, (val) => {
       if (val) {
         form.value = data.value;
+        console.log(form.value);
       }
     });
 
@@ -65,25 +65,28 @@ export default defineComponent({
       content: [{ required: true, message: "内容不可为空", trigger: "blur" }],
     });
 
+    const noticeContentChange = (val: string) => {
+      form.value.content = val;
+    };
+
     const isLoading: Ref<boolean> = ref(false);
     const submit = async () => {
       let res: any = null;
-      console.log(form.value);
       isLoading.value = true;
 
-      // if (form.value.id) {
-      //   res = await update(form.value);
-      // } else {
-      //   res = await add(form.value);
-      // }
+      if (form.value.id) {
+        res = await update(form.value);
+      } else {
+        res = await add(form.value);
+      }
 
-      // if (res.code === 200) {
-      //   ElMessage.success("操作成功");
-      //   emit("frensh");
-      //   isOpen.value = false;
-      // } else {
-      //   ElMessage.error("操作失败");
-      // }
+      if (res.code === 200) {
+        ElMessage.success("操作成功");
+        emit("frensh");
+        isOpen.value = false;
+      } else {
+        ElMessage.error("操作失败");
+      }
       isLoading.value = false;
     };
 
@@ -94,6 +97,7 @@ export default defineComponent({
       form,
       rules,
       submit,
+      noticeContentChange,
     };
   },
 });

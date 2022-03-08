@@ -103,7 +103,7 @@ export default defineComponent({
 
     const tableColumn: TableColumn[] = [
       { label: "标题", prop: "title", width: "", align: "center" },
-      { label: "内容", prop: "content", width: "", align: "center" },
+      { label: "内容", prop: "content", width: "", align: "center", showOverflowTooltip: true },
       { label: "操作", align: "center", slot: "control" },
     ];
 

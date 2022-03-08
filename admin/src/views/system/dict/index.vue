@@ -16,7 +16,7 @@
               <el-button type="text" @click="detail(row)"> 列表 </el-button>
               <el-popconfirm confirm-button-text="确认" cancel-button-text="取消" title="确认删除该字典?" @confirm="dele(row.id)">
                 <template #reference>
-                  <el-button type="text"> 删除 </el-button>
+                  <el-button type="text" :disabled="row.value === 'subject'"> 删除 </el-button>
                 </template>
               </el-popconfirm>
             </template>

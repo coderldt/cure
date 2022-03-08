@@ -28,10 +28,10 @@ module.exports = {
       "error",
       {
         singleline: {
-          max: 6,
+          max: 7,
         },
         multiline: {
-          max: 5,
+          max: 6,
         },
       },
     ],
