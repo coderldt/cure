@@ -24,9 +24,14 @@ class BaseService extends Service {
     return md5(buf);
   }
 
-  async cAddData(param) {
+  async cAddData(param, conn) {
     try {
-      const result = await this.app.mysql.insert(this.table, param);
+      let result = null;
+      if (conn) {
+        result = await conn.insert(this.table, param);
+      } else {
+        result = await this.app.mysql.insert(this.table, param);
+      }
       console.log(result, 'result');
       if (result.affectedRows === 1) {
         return {
@@ -84,6 +89,7 @@ class BaseService extends Service {
     try {
       let result = null;
       if (conn) {
+        console.log(this.table);
         result = await conn.update(this.table, param);
       } else {
         result = await this.app.mysql.update(this.table, param);
@@ -106,9 +112,15 @@ class BaseService extends Service {
     }
   }
 
-  async cDelData(params) {
+  async cDelData(params, conn) {
     try {
-      const result = await this.app.mysql.delete(this.table, params);
+      let result = null;
+      if (conn) {
+        result = await conn.delete(this.table, params);
+      } else {
+        result = await this.app.mysql.delete(this.table, params);
+      }
+
       if (result.affectedRows) {
         return {
           code: 200,
@@ -274,6 +286,21 @@ class BaseService extends Service {
     };
 
   }
+
+  async sql(sql, conn) {
+    try {
+      let res = null;
+      if (conn) {
+        res = await conn.query(sql);
+      } else {
+        res = await this.app.mysql.query(sql);
+      }
+      return res;
+    } catch (error) {
+      return [];
+    }
+  }
+
 }
 
 module.exports = BaseService;

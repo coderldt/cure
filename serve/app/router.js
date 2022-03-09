@@ -41,6 +41,7 @@ module.exports = app => {
 
   // APP
   router.post('/question/list', controller.question.index.list);
+  router.post('/question/hotList', controller.question.index.hotList); // 热门
   router.post('/question/add', controller.question.index.add);
   router.post('/question/update', controller.question.index.update);
   router.post('/question/delete', controller.question.index.delete);
@@ -63,5 +64,7 @@ module.exports = app => {
   router.post('/bottle/add', controller.bottle.index.add);
   router.post('/bottle/delete', controller.bottle.index.delete);
   router.post('/bottle/reply', controller.bottle.index.reply);
-
+  // 捞瓶子
+  router.post('/bottle/addMyBottle', controller.bottle.index.addMyBottle);
+  router.post('/bottle/dottleReplayList', controller.bottle.index.dottleReplayList);
 };

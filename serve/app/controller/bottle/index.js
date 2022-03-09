@@ -16,7 +16,8 @@ class BottleController extends BaseController {
     this.success({ data: res });
   }
 
-  async add() { // 登录
+  // 抛出瓶子
+  async add() {
     const { ctx } = this;
     const { content } = ctx.request.body;
     if (!content) {
@@ -39,24 +40,79 @@ class BottleController extends BaseController {
     }
   }
 
+  // 捞瓶子
+  async addMyBottle() {
+    const isSussess = Math.random();
+
+    if (isSussess > 0.3) {
+      return this.error({ msg: '没有捞到瓶子，别灰心哦！' });
+    }
+
+    const list = await this.service.query({ status: 1 });
+
+    if (list.length === 0) {
+      return this.error({ msg: '当前瓶子太少，您可以自己抛一个哦！' });
+    }
+
+    const index = Math.floor(Math.random() * list.length);
+
+    const conn = await this.app.mysql.beginTransaction(); // 初始化事务
+    try {
+      const { id } = this.ctx.userinfo;
+      const res = await this.botleUserService.cAddData({ userId: id, bottleId: list[index].id }, conn);
+
+      const bRes = await this.service.cUpdateData({ id: list[index].id, status: 2 }, conn);
+
+      if (res.code !== 200 || bRes.code !== 200) {
+        throw new Error('出错了');
+      }
+      await conn.commit(); // 提交事务
+      this.success({ data: list[index] });
+    } catch (error) {
+      await conn.rollback(); // 回滚事务！！
+      this.error({ msg: '没有捞到瓶子，请等会在试！！！' });
+    }
+  }
+
   // 抛出
   async delete() {
+    // 瓶子id
     const { id } = this.ctx.request.body;
     if (!id) {
       return this.error({ data: '抛出错误' });
     }
 
-    const params = {
-      id,
-      status: 1,
-    };
+    const conn = await this.app.mysql.beginTransaction(); // 初始化事务
+    try {
+      const { id: userId } = this.ctx.userinfo;
+      const params = {
+        id,
+        status: 1,
+      };
 
-    const res = await this.service.update(params);
-    if (res.code === 200) {
-      this.success({ data: res.data, msg: '抛出成功' });
-    } else {
+      const res = await this.service.cUpdateData(params, conn);
+
+      const uRes = await this.botleUserService.cDelData({ userId, bottleId: id }, conn);
+
+      if (res.code !== 200 || uRes.code !== 200) {
+        throw new Error('出错了');
+      }
+      await conn.commit(); // 提交事务
+      this.success({ msg: '抛出成功' });
+    } catch (error) {
+      await conn.rollback(); // 回滚事务！！
       this.error({ msg: '抛出失败' });
     }
+  }
+
+  async dottleReplayList() {
+    const { bottleId } = this.ctx.request.body;
+    if (!bottleId) {
+      return this.error({ msg: '请选择一个瓶子。' });
+    }
+
+    const res = await this.botleReplyService.query({ bottleId });
+    this.success({ data: res });
   }
 
   // 回复

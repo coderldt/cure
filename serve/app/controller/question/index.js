@@ -11,22 +11,50 @@ class QuestionController extends BaseController {
   async list() {
     const { title, pageNum = 1 } = this.ctx.request.body;
     const { id } = this.ctx.userinfo;
-    const querytables = [
-      {
-        table: 'questions',
-        keys: [ '*' ],
-        vagueCon: {},
-        accurateCon: { userId: id },
-      },
-    ];
+
+    const where = [ `questions.userId = '${id}'` ];
     if (title) {
-      querytables[0].vagueCon.title = title;
+      where.push(`questions.title like '%${title}%'`);
     }
-    const res = await this.service.multiTableQuery(querytables, [], { pageNum, pageSize: 5 });
-    if (res.code === 200) {
-      this.success({ data: res.data });
+
+    const sql = `select
+    questions.*, count(user_similar.questionId) as count
+    from questions
+    left join user_similar
+    on questions.id = user_similar.questionId
+    where ${where.join(' and ')}
+    group by questions.id
+    order by count desc
+    limit 5 offset ${(pageNum - 1) * 5};`;
+    const res = await this.service.sql(sql);
+    if (res.length) {
+      this.success({ data: res });
     } else {
-      this.error({ msg: '查询失' });
+      this.error({ msg: '查询失败' });
+    }
+  }
+
+  async hotList() {
+    const { title, pageNum = 1 } = this.ctx.request.body;
+    const where = [];
+    if (title) {
+      where.push(`questions.title like '%${title}%'`);
+    }
+
+    const sql = `select
+    questions.*, count(user_similar.questionId) as count
+    from questions
+    left join user_similar
+    on questions.id = user_similar.questionId
+    ${where.length ? `where ${where.join(' and ')}` : ''}
+    group by questions.id
+    order by count desc
+    limit 5 offset ${(pageNum - 1) * 5};`;
+    const res = await this.service.sql(sql);
+    if (res.length) {
+      this.success({ data: res });
+    } else {
+      this.error({ msg: '查询失败' });
     }
   }
 
