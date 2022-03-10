@@ -42,6 +42,22 @@ class UserController extends BaseController {
       this.error({ msg: '注册失败' });
     }
   }
+
+  async update() {
+    const { ctx } = this;
+    const { id, avatar, username, autograph } = ctx.request.body;
+    if (!id) {
+      return this.error({ data: '找不到该用户' });
+    }
+
+    const params = { id, avatar, username, autograph };
+    const res = await this.service.update(params);
+    if (res.code === 200) {
+      this.success({ msg: '更新成功', data: params });
+    } else {
+      this.error({ msg: '更新失败' });
+    }
+  }
 }
 
 module.exports = UserController;

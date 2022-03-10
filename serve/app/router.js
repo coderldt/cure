@@ -7,6 +7,7 @@ module.exports = app => {
   const { router, controller } = app;
   router.prefix('/cureApi');
   router.post('/login', controller.sys.user.login);
+  router.post('/update', controller.sys.user.update);
   router.post('/register', controller.sys.user.register);
 
   router.post('/dict/list', controller.sys.dict.list);
@@ -56,6 +57,7 @@ module.exports = app => {
   router.post('/question/updateQuestion', controller.question.index.updateQuestion);
 
   // 回复评论
+  router.post('/reply/list', controller.question.reply.list); // 某个问题的所有评论
   router.post('/reply/add', controller.question.reply.add);
   router.post('/reply/delete', controller.question.reply.delete);
 
@@ -67,4 +69,16 @@ module.exports = app => {
   // 捞瓶子
   router.post('/bottle/addMyBottle', controller.bottle.index.addMyBottle);
   router.post('/bottle/dottleReplayList', controller.bottle.index.dottleReplayList);
+
+  // 用户
+  router.post('/user/myReply', controller.question.reply.myReply);
+  router.post('/user/myArticle', controller.sys.article.myArticle);
+  router.post('/user/myQuestions', controller.question.index.myQuestions);
+
+
+  // 随机出题
+  router.post('/subject/randomTest', controller.subject.testSubject.randomTest);
+  router.post('/subject/testResult', controller.subject.testSubject.testResult);
+  router.post('/subject/testHistory', controller.subject.testSubject.testHistory);
+
 };

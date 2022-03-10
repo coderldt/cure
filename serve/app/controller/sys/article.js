@@ -93,6 +93,37 @@ class ArticleController extends BaseController {
       }
     }
   }
+
+  async myArticle() {
+    const { id } = this.ctx.userinfo;
+
+    const querytables = [
+      {
+        table: 'user_article',
+        keys: [ '*' ],
+        vagueCon: {},
+        accurateCon: { userId: id },
+      },
+      {
+        table: 'article',
+        keys: [ 'title' ],
+        leftJoinCon: [ 'article.id = user_article.articleId' ],
+      },
+    ];
+    const res = await this.service.multiTableQuery(querytables, [], null);
+    if (res.code === 200) {
+      this.success({ data: res.data });
+    } else {
+      this.error({ msg: '查询失败' });
+    }
+  }
+  // async myArticle() {
+  //   const { id } = this.ctx.userinfo;
+  //   console.log(id);
+  //   const res = await this.service.query({ userId: id });
+  //   console.log(res);
+  //   this.success({ data: res });
+  // }
 }
 
 module.exports = ArticleController;

@@ -9,27 +9,18 @@ class ReplyController extends BaseController {
     this.replyUserservice = ctx.service.question.replyUser;
   }
 
+  // 回复的所有评论
   async list() {
-    const { title, pageNum = 1 } = this.ctx.request.body;
-    const querytables = [
-      {
-        table: 'questions',
-        keys: [ '*' ],
-        vagueCon: {},
-      },
-    ];
-    if (title) {
-      querytables[0].vagueCon.title = title;
+    const { questionId } = this.ctx.request.body;
+    if (!questionId) {
+      return this.error({ msg: '找不到该问题id' });
     }
-    const res = await this.service.multiTableQuery(querytables, [], { pageNum, pageSize: 5 });
-    if (res.code === 200) {
-      this.success({ data: res.data });
-    } else {
-      this.error({ msg: '查询失' });
-    }
+
+    const res = await this.service.query({ questionId });
+    this.success({ data: res });
   }
 
-  async add() { // 登录
+  async add() {
     const { questionId, content, replyId } = this.ctx.request.body;
     if (!questionId || !content) {
       return this.error({ msg: '回复内容为空，或者找不到该文章' });
@@ -88,6 +79,31 @@ class ReplyController extends BaseController {
       } else {
         this.error({ msg: '出错了，请稍后再试' });
       }
+    }
+  }
+
+  // 我的所有评论
+  async myReply() {
+    const { id } = this.ctx.userinfo;
+
+    const querytables = [
+      {
+        table: 'question_reply',
+        keys: [ '*' ],
+        vagueCon: {},
+        accurateCon: { rUserId: id },
+      },
+      {
+        table: 'questions',
+        keys: [ 'title', 'labels', 'desc' ],
+        leftJoinCon: [ 'questions.id = question_reply.questionId' ],
+      },
+    ];
+    const res = await this.service.multiTableQuery(querytables, [], null);
+    if (res.code === 200) {
+      this.success({ data: res.data });
+    } else {
+      this.error({ msg: '查询失败' });
     }
   }
 }

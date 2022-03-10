@@ -18,10 +18,12 @@ class QuestionController extends BaseController {
     }
 
     const sql = `select
-    questions.*, count(user_similar.questionId) as count
+    questions.*, count(user_similar.questionId) as count, count(question_reply.questionId) as commentCount
     from questions
     left join user_similar
     on questions.id = user_similar.questionId
+    left join question_reply
+    on questions.id = question_reply.questionId
     where ${where.join(' and ')}
     group by questions.id
     order by count desc
@@ -42,10 +44,12 @@ class QuestionController extends BaseController {
     }
 
     const sql = `select
-    questions.*, count(user_similar.questionId) as count
+    questions.*, count(user_similar.questionId) as count, count(question_reply.questionId) as commentCount
     from questions
     left join user_similar
     on questions.id = user_similar.questionId
+    left join question_reply
+    on questions.id = question_reply.questionId
     ${where.length ? `where ${where.join(' and ')}` : ''}
     group by questions.id
     order by count desc
@@ -136,6 +140,14 @@ class QuestionController extends BaseController {
         this.error({ msg: '出错了，请稍后再试' });
       }
     }
+  }
+
+  // 我发布的
+  async myQuestions() {
+    const { id } = this.ctx.userinfo;
+
+    const res = await this.service.query({ userId: id });
+    this.success({ data: res });
   }
 }
 

@@ -185,6 +185,8 @@ class BaseService extends Service {
     if (where) {
       sql += ` where ${where.join(' and ')} `;
     }
+    sql += ';';
+    console.log(sql);
 
     try {
       let res = null;
@@ -217,13 +219,13 @@ class BaseService extends Service {
    * @return { code, data, msg }
    */
   async multiTableQuery(querytables, queryCondition, page, cb) {
-    if (!page.pageNum || !page.pageSize) {
-      return {
-        code: 500,
-        data: null,
-        msg: '参数错误',
-      };
-    }
+    // if (!page.pageNum || !page.pageSize) {
+    //   return {
+    //     code: 500,
+    //     data: null,
+    //     msg: '参数错误',
+    //   };
+    // }
 
     const qTables = [];
     const qKeys = [];
@@ -262,9 +264,9 @@ class BaseService extends Service {
       cb({ qCondition });
     }
 
-    const sql = `select ${qKeys.join(',')} from ${qTables.join(' ')} ${qCondition.length ? 'where ' : ' '} ${qCondition.join(' and ')}  limit ${page.pageSize} offset ${(page.pageNum - 1) * page.pageSize};`;
-    const totalSql = `select count(1) from ${qTables.join(' ')} ${qCondition.length ? 'where ' : ' '} ${qCondition.join(' and ')}`;
-    console.log(sql);
+    const sql = `select ${qKeys.join(',')} from ${qTables.join(' ')} ${qCondition.length ? 'where ' : ' '} ${qCondition.join(' and ')} ${page ? ` limit ${page.pageSize} offset ${(page.pageNum - 1) * page.pageSize}` : ''};`;
+    const totalSql = `select count(1) from ${qTables.join(' ')} ${qCondition.length ? 'where ' : ' '} ${qCondition.join(' and ')};`;
+    console.log(sql, '1', totalSql, '2');
     const result = await this.app.mysql.query(sql);
     const total = await this.app.mysql.query(totalSql);
 
@@ -272,13 +274,15 @@ class BaseService extends Service {
       const data = {
         code: 200,
         data: {
-          pageNum: page.pageNum,
-          pageSize: page.pageSize,
           total: JSON.parse(JSON.stringify(total))[0]['count(1)'],
           result,
         },
         msg: '',
       };
+      if (page) {
+        data.data.pageNum = page.pageNum;
+        data.data.pageSize = page.pageSize;
+      }
       return data;
     }
     return {

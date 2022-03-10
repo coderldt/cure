@@ -48,11 +48,12 @@ class UserService extends BaseService {
     return res;
   }
 
-  async update({ openid, avatar, user_name }) {
+  async update({ id, avatar, username, autograph }) {
     const params = {
-      id: this.md5(openid),
-      user_avatar: avatar,
-      user_name,
+      id,
+      username,
+      autograph,
+      avatar,
     };
 
     const res = await this.cUpdateData(params);
