@@ -10,27 +10,43 @@ class QuestionController extends BaseController {
 
   async list() {
     const { title, pageNum = 1 } = this.ctx.request.body;
-    const { id } = this.ctx.userinfo;
 
-    const where = [ `questions.userId = '${id}'` ];
+    // const where = [ `questions.userId = '${id}'` ];
+    const where = [];
     if (title) {
       where.push(`questions.title like '%${title}%'`);
     }
 
     const sql = `select
-    questions.*, count(user_similar.questionId) as count, count(question_reply.questionId) as commentCount
+      questions.*,
+      count(user_similar.questionId) as count,
+      count(question_reply.questionId) as commentCount,
+      sys_user.username,
+      sys_user.avatar
     from questions
     left join user_similar
     on questions.id = user_similar.questionId
+    left join sys_user
+    on questions.userId = sys_user.id
     left join question_reply
     on questions.id = question_reply.questionId
-    where ${where.join(' and ')}
+    ${where.length ? `where ${where.join(' and ')}` : ''}
     group by questions.id
-    order by count desc
+    order by commentCount desc
     limit 5 offset ${(pageNum - 1) * 5};`;
+
+    const total = `select
+    count(1)
+    from questions
+    ${where.length ? `where ${where.join(' and ')}` : ''}`;
     const res = await this.service.sql(sql);
+    const totelRes = await this.service.sql(total);
     if (res.length) {
-      this.success({ data: res });
+      this.success({ data: {
+        data: res,
+        pageNum,
+        total: JSON.parse(JSON.stringify(totelRes))[0]['count(1)'],
+      } });
     } else {
       this.error({ msg: '查询失败' });
     }
@@ -44,19 +60,35 @@ class QuestionController extends BaseController {
     }
 
     const sql = `select
-    questions.*, count(user_similar.questionId) as count, count(question_reply.questionId) as commentCount
+    questions.*,
+      count(user_similar.questionId) as count,
+      count(question_reply.questionId) as commentCount,
+      sys_user.username,
+      sys_user.avatar
     from questions
     left join user_similar
     on questions.id = user_similar.questionId
+    left join sys_user
+    on questions.userId = sys_user.id
     left join question_reply
     on questions.id = question_reply.questionId
     ${where.length ? `where ${where.join(' and ')}` : ''}
     group by questions.id
     order by count desc
     limit 5 offset ${(pageNum - 1) * 5};`;
+
+    const total = `select
+    count(1)
+    from questions
+    ${where.length ? `where ${where.join(' and ')}` : ''}`;
     const res = await this.service.sql(sql);
+    const totalRes = await this.service.sql(total);
     if (res.length) {
-      this.success({ data: res });
+      this.success({ data: {
+        data: res,
+        pageNum,
+        total: JSON.parse(JSON.stringify(totalRes))[0]['count(1)'],
+      } });
     } else {
       this.error({ msg: '查询失败' });
     }

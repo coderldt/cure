@@ -25,10 +25,11 @@ module.exports = appInfo => {
     match(ctx) {
       // 匹配不需要验证token的路由
       const url = ctx.request.url;
-      if (tokenConfig.ignoreValiPaths.some(path => url === path)) {
-        return false;
+      console.log(url);
+      if (tokenConfig.valiPaths.some(path => url === path)) {
+        return true; // 开启中间件，开启token验证
       }
-      return true; // 开启中间件，开启token验证
+      return false;
     },
   };
   config.errorConfig = {
@@ -68,18 +69,31 @@ module.exports = appInfo => {
     },
   };
 
-  config.security = {
-    csrf: {
-      enable: false,
-    },
-  };
-
   config.static = {
     prefix: '/unionPublic/',
   };
 
   config.multipart = {
     mode: 'file',
+  };
+
+  config.cluster = {
+    listen: {
+      port: 8000,
+      hostname: '127.0.0.1',
+    },
+  };
+
+  config.security = {
+    csrf: {
+      enable: false,
+      ignoreJSON: true,
+    },
+    domainWhiteList: [ '*' ],
+  };
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
 
   return {

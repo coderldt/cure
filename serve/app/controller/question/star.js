@@ -7,6 +7,13 @@ class StarController extends BaseController {
     this.service = ctx.service.question.star;
   }
 
+  async list() {
+    const { id } = this.ctx.userinfo;
+
+    const resList = await this.service.query({ userId: id });
+    this.success({ data: resList });
+  }
+
   // 同感
   async update() {
     const { questionId } = this.ctx.request.body;

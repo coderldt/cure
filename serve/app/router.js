@@ -49,6 +49,7 @@ module.exports = app => {
 
   // 同情
   router.post('/star/update', controller.question.star.update);
+  router.post('/star/list', controller.question.star.list);
   // 收藏/取消文章
   router.post('/article/updateArticle', controller.sys.article.updateArticle);
   // 点赞、取消评论回复

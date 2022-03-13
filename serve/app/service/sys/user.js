@@ -21,6 +21,7 @@ class UserService extends BaseService {
       res = result[0];
 
 
+      console.log(res);
       const token = app.jwt.sign({
         username: res.username, // 需要存储的 token 数据
         id: res.id,

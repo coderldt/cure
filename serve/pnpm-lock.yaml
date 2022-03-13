@@ -7,6 +7,7 @@ specifiers:
   egg: ^2.15.1
   egg-bin: ^4.11.0
   egg-ci: ^1.11.0
+  egg-cors: ^2.2.3
   egg-jwt: ^3.1.7
   egg-mock: ^3.21.0
   egg-mysql: ^3.0.0
@@ -20,6 +21,7 @@ specifiers:
 dependencies:
   dayjs: r2.cnpmjs.org/dayjs/1.10.7
   egg: r2.cnpmjs.org/egg/2.33.1
+  egg-cors: 2.2.3
   egg-jwt: r2.cnpmjs.org/egg-jwt/3.1.7
   egg-mysql: r2.cnpmjs.org/egg-mysql/3.0.0
   egg-scripts: r2.cnpmjs.org/egg-scripts/2.15.2
@@ -51,7 +53,7 @@ packages:
     dependencies:
       '@babel/types': 7.17.0
       jsesc: r2.cnpmjs.org/jsesc/2.5.2
-      source-map: r2.cnpmjs.org/source-map/0.5.7
+      source-map: 0.5.7
     dev: true
 
   /@babel/helper-environment-visitor/7.16.7:
@@ -161,6 +163,13 @@ packages:
       to-fast-properties: r2.cnpmjs.org/to-fast-properties/2.0.0
     dev: true
 
+  /@koa/cors/3.2.0:
+    resolution: {integrity: sha512-bMjKGAJW2lg2jm7StqedeL/TMra0zl5VMtRyzl+WKbopj3AZEvy+FE8zeWvl1x3pofuU4a7ICuwIK/nr5/PEHg==}
+    engines: {node: '>= 8.0.0'}
+    dependencies:
+      vary: 1.1.2
+    dev: false
+
   /@types/express-serve-static-core/4.17.28:
     resolution: {integrity: sha512-P1BJAEAW3E2DJUlkgq4tOL3RyMunoWXqbSCygWo5ZIWTjUgN1YnaXWW4VWl/oc8vs/XoYibEGBKP0uZyF4AHig==}
     dependencies:
@@ -223,7 +232,7 @@ packages:
       normalize-path: r2.cnpmjs.org/normalize-path/3.0.0
       readdirp: r2.cnpmjs.org/readdirp/3.6.0
     optionalDependencies:
-      fsevents: r2.cnpmjs.org/fsevents/2.3.2
+      fsevents: 2.3.2
     dev: true
 
   /core-js-pure/3.21.0:
@@ -295,6 +304,13 @@ packages:
       - supports-color
     dev: false
 
+  /egg-cors/2.2.3:
+    resolution: {integrity: sha512-MLG4pQekZpycLXR45ZAIgFpFYshosBxu1CMdhXAzqPzxUn0xI21gVzqLqcxUrzzulaErCwG6qMXaS1eFyj9u2w==}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      '@koa/cors': 3.2.0
+    dev: false
+
   /egg-logger/2.7.1:
     resolution: {integrity: sha512-A4K9eux5wzhHZ+Hg5ON3pwTB2eAuCWOse3MAkYaI6kwatmW8n2JXZb8Y3QRgEiGUp6jtR5rb6jKjy5n/p/IzyQ==}
     engines: {node: '>=8.5.0'}
@@ -355,6 +371,14 @@ packages:
       merge2: r2.cnpmjs.org/merge2/1.4.1
       micromatch: r2.cnpmjs.org/micromatch/4.0.4
     dev: false
+
+  /fsevents/2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
 
   /graceful-fs/4.2.9:
     resolution: {integrity: sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==}
@@ -439,6 +463,16 @@ packages:
       ip: r2.cnpmjs.org/ip/1.1.5
       smart-buffer: r2.cnpmjs.org/smart-buffer/4.2.0
 
+  /source-map/0.5.7:
+    resolution: {integrity: sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=}
+    engines: {node: '>=0.10.0'}
+    dev: true
+
+  /source-map/0.6.1:
+    resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
+    engines: {node: '>=0.10.0'}
+    optional: true
+
   /supports-preserve-symlinks-flag/1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
@@ -453,6 +487,11 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
+
+  /vary/1.1.2:
+    resolution: {integrity: sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=}
+    engines: {node: '>= 0.8'}
+    dev: false
 
   /vm2/3.9.6:
     resolution: {integrity: sha512-BF7euUjgO+ezsz2UKex9kO9M/PtDNOf+KEpiqNepZsgf1MT7JYfJEIvG8BoYhZMLAVjqevFJ0UmXNuETe8m5dQ==}
@@ -478,7 +517,7 @@ packages:
       '@babel/types': r2.cnpmjs.org/@babel/types/7.0.0-beta.44
       jsesc: r2.cnpmjs.org/jsesc/2.5.2
       lodash: r2.cnpmjs.org/lodash/4.17.21
-      source-map: r2.cnpmjs.org/source-map/0.5.7
+      source-map: 0.5.7
       trim-right: r2.cnpmjs.org/trim-right/1.0.1
     dev: true
 
@@ -3997,7 +4036,7 @@ packages:
       esutils: r2.cnpmjs.org/esutils/2.0.3
       optionator: r2.cnpmjs.org/optionator/0.8.3
     optionalDependencies:
-      source-map: r2.cnpmjs.org/source-map/0.6.1
+      source-map: 0.6.1
 
   r2.cnpmjs.org/escope/3.6.0:
     resolution: {integrity: sha512-75IUQsusDdalQEW/G/2esa87J7raqdJF+Ca0/Xm5C3Q58Nr4yVYjZGp/P1+2xiEVgXRrA39dpRb8LcshajbqDQ==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/escope/-/escope-3.6.0.tgz}
@@ -4235,7 +4274,7 @@ packages:
     dependencies:
       is-url: r2.cnpmjs.org/is-url/1.2.4
       path-is-absolute: r2.cnpmjs.org/path-is-absolute/1.0.1
-      source-map: r2.cnpmjs.org/source-map/0.5.7
+      source-map: 0.5.7
       xtend: r2.cnpmjs.org/xtend/4.0.2
     dev: true
 
@@ -4704,16 +4743,6 @@ packages:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz}
     name: fs.realpath
     version: 1.0.0
-
-  r2.cnpmjs.org/fsevents/2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/fsevents/-/fsevents-2.3.2.tgz}
-    name: fsevents
-    version: 2.3.2
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   r2.cnpmjs.org/ftp/0.3.10:
     resolution: {integrity: sha512-faFVML1aBx2UoDStmLwv2Wptt4vw5x03xxX172nhA5Y5HBshW5JweqQ2W4xL4dezQTG8inJsuYcpPHHU3X5OTQ==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/ftp/-/ftp-0.3.10.tgz}
@@ -6170,7 +6199,7 @@ packages:
       parseurl: r2.cnpmjs.org/parseurl/1.3.3
       statuses: r2.cnpmjs.org/statuses/1.5.0
       type-is: r2.cnpmjs.org/type-is/1.6.18
-      vary: r2.cnpmjs.org/vary/1.1.2
+      vary: 1.1.2
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -8368,7 +8397,7 @@ packages:
       define-property: r2.cnpmjs.org/define-property/0.2.5
       extend-shallow: r2.cnpmjs.org/extend-shallow/2.0.1
       map-cache: r2.cnpmjs.org/map-cache/0.2.2
-      source-map: r2.cnpmjs.org/source-map/0.5.7
+      source-map: 0.5.7
       source-map-resolve: r2.cnpmjs.org/source-map-resolve/0.5.3
       use: r2.cnpmjs.org/use/3.1.1
     dev: true
@@ -8403,7 +8432,7 @@ packages:
     name: source-map-support
     version: 0.4.18
     dependencies:
-      source-map: r2.cnpmjs.org/source-map/0.5.7
+      source-map: 0.5.7
     dev: true
 
   r2.cnpmjs.org/source-map-support/0.5.21:
@@ -9248,13 +9277,6 @@ packages:
       spdx-correct: r2.cnpmjs.org/spdx-correct/3.1.1
       spdx-expression-parse: r2.cnpmjs.org/spdx-expression-parse/3.0.1
     dev: true
-
-  r2.cnpmjs.org/vary/1.1.2:
-    resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/vary/-/vary-1.1.2.tgz}
-    name: vary
-    version: 1.1.2
-    engines: {node: '>= 0.8'}
-    dev: false
 
   r2.cnpmjs.org/which-boxed-primitive/1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/which-boxed-primitive/-/which-boxed-primitive-1.0.2.tgz}

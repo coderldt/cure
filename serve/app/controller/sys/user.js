@@ -35,6 +35,11 @@ class UserController extends BaseController {
       return this.error({ data: '手机号或者不能为空' });
     }
 
+    const list = await this.service.query({ phone });
+    if (list.length) {
+      return this.error({ msg: '当前手机号已注册' });
+    }
+
     const res = await this.service.add({ phone, password });
     if (res.code === 200) {
       this.success({ msg: '注册成功' });
