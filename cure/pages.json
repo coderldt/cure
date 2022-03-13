@@ -1,23 +1,36 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/home/index",
+			"path": "pages/find/index",
 			"style": {
-				"navigationBarTitleText": "社区-问题",
-				"navigationBarBackgroundColor":"#6ab5ee",
-				"navigationBarTextStyle":"white"
+				"navigationBarTitleText": "发现"
 			}
 		},
 		{
 			"path": "pages/my/index",
 			"style": {
-				"navigationBarTitleText": "我的"
+				"navigationStyle":"custom"
 			}
 		},
 		{
-			"path": "pages/find/index",
+			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "发现"
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/login/register",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
+		},
+		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "社区-问题",
+				"navigationBarBackgroundColor":"#6ab5ee",
+				"navigationBarTextStyle":"white",
+				"enablePullDownRefresh": true
 			}
 		}
 	],
