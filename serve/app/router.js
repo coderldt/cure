@@ -38,7 +38,8 @@ module.exports = app => {
   router.post('/subjectAnalysis/add', controller.subject.subjectAnalysis.add);
   router.post('/subjectAnalysis/update', controller.subject.subjectAnalysis.update);
   router.post('/subjectAnalysis/delete', controller.subject.subjectAnalysis.delete);
-  // router.post('/upload', controller.tools.upload.upload);
+
+  router.post('/upload', controller.tools.upload.upload);
 
   // APP
   router.post('/question/list', controller.question.index.list);

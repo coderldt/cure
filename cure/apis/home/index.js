@@ -28,3 +28,13 @@ export function starList (data) {
 export function questionUpdate (data) {
 	return axios.post({ url: '/question/updateQuestion', data })
 }
+
+// 点赞评论
+export function updateReply (data) {
+	return axios.post({ url: '/reply/updateReply', data })
+}
+
+// 回复评论
+export function addReply (data) {
+	return axios.post({ url: '/reply/add', data })
+}

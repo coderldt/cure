@@ -15,9 +15,33 @@ class ReplyController extends BaseController {
     if (!questionId) {
       return this.error({ msg: '找不到该问题id' });
     }
+    const querytables = [
+      {
+        table: 'question_reply',
+        keys: [ '*' ],
+        vagueCon: { questionId },
+      },
+      {
+        table: 'sys_user',
+        keys: [ 'username', 'avatar' ],
+        leftJoinCon: [ 'question_reply.rUserId = sys_user.id' ],
+      },
+      {
+        table: 'user_reply',
+        keys: [ ],
+        totalKeys: [ 'count(user_reply.id) as countReply' ],
+        leftJoinCon: [ 'user_reply.replyId = question_reply.id' ],
+      },
+    ];
 
-    const res = await this.service.query({ questionId });
-    this.success({ data: res });
+    const res = await this.service.multiTableQuery(querytables, [], null, 'question_reply.id');
+    if (res.code === 200) {
+      const resTree = this.arrayToTree(this.sortTime(res.data.result));
+      this.success({ data: resTree });
+      // this.success({ data: res.data });
+    } else {
+      this.error({ msg: '查询失败' });
+    }
   }
 
   async add() {
@@ -105,6 +129,33 @@ class ReplyController extends BaseController {
     } else {
       this.error({ msg: '查询失败' });
     }
+  }
+
+  sortTime(list) {
+    return list.sort((a, b) => {
+      return dayjs(a.createTime).isAfter(b.createTime) ? -1 : 1;
+    });
+  }
+
+  arrayToTree(data) {
+    const result = [];
+    if (!Array.isArray(data)) {
+      return result;
+    }
+
+    const map = {};
+    data.forEach(item => {
+      map[item.id] = item;
+    });
+    data.forEach(item => {
+      const parent = map[item.replyId];
+      if (parent) {
+        (parent.children || (parent.children = [])).push(item);
+      } else {
+        result.push(item);
+      }
+    });
+    return result;
   }
 }
 

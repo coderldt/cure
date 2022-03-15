@@ -12,7 +12,7 @@
 				</view>
 				<view class="author">
 					<view class="userAvatar">
-						{{item.avatar}}
+						<u--image :src="PROFIX_UPLOAD + item.avatar" width="80rpx" height="80rpx" shape="circle" ></u--image>
 					</view>
 					<view class="username">
 						{{item.username}}
@@ -33,13 +33,16 @@
 		</view>
 		<view class="count">
 			<!-- <text @click="onCommentChange(item)">{{item.commentCount}}有用</text> -->
-			<text class="comment" @click="onCommentChange(item)">{{item.commentCount}}评论</text>
+			<text class="comment" v-if="!item.reply || !item.reply.length" @click="onCommentChange(item)">{{item.commentCount}}评论</text>
+			<ReplyList class="reply" v-if="item.reply && item.reply.length" :replyList="item.reply"></ReplyList>
 		</view>
 	</view>
 </template>
 
 <script>
 	import { starUpdate, replyList } from "../../../apis/home/index.js"
+	import { PROFIX_UPLOAD } from '../../../config/index.js'
+	// import ReplyList from './reply.vue'
 	export default {
 		props: {
 			item: {
@@ -51,13 +54,18 @@
 				default: false
 			}
 		},
+		components: {
+			// ReplyList,
+		},
 		data() {
 			return {
-				labels: []
+				labels: [],
+				PROFIX_UPLOAD
 			}
 		},
 		computed: {
 			getLabels() {
+				console.log(this.item);
 				if (this.item.labels.length) {
 					const res = []
 					const labels = this.item.labels.split(',')
@@ -145,8 +153,10 @@
 				}
 				.author {
 					display: flex;
+					align-items: center;
 					font-size: 35rpx;
-					color: #b9d6e6;
+					color: #da8145;
+					margin: 20rpx 0;
 					
 					.username {
 						margin-left: 20rpx;
@@ -177,9 +187,9 @@
 		}
 		.desc {
 			margin: 0 0 10rpx 0;
-			font-size: 28rpx;
+			font-size: 30rpx;
 			line-height: 1.5em;
-			color: #c7cbcd;
+			color: #505050;
 		}
 		
 		.count {
@@ -187,6 +197,10 @@
 			font-weight: 600;
 			color: #b1d6eb;
 			
+			.reply {
+				padding-top: 20rpx;
+				border-top: 1px solid #eaeaea;
+			}
 		}
 	}
 </style>

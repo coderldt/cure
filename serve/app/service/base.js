@@ -208,6 +208,7 @@ class BaseService extends Service {
    *      {
    *          table: "early_warn",          // 查询的表名
    *          keys: ['*', 'modifyTime'],    // 需要返回的字段
+   *          totalKeys: ['count(user_reply.id) as countId'],
    *          accurateCon: { serialNo  },   // 精确查询条件
    *          vagueCon: { name: '123' },    // 模糊查询条件
    *          leftJoinCon: ["early_warn.signalId = wanging_signal_config.signalId"]    // 与前表关联条件（前表应先声明，在添加关联条件）
@@ -218,7 +219,7 @@ class BaseService extends Service {
    * @param {*} cb 回调自定义内容函数
    * @return { code, data, msg }
    */
-  async multiTableQuery(querytables, queryCondition, page, cb) {
+  async multiTableQuery(querytables, queryCondition, page, groupBy, cb) {
     // if (!page.pageNum || !page.pageSize) {
     //   return {
     //     code: 500,
@@ -230,7 +231,7 @@ class BaseService extends Service {
     const qTables = [];
     const qKeys = [];
     const qCondition = [ ...queryCondition ];
-    querytables.forEach(({ table, keys, accurateCon, vagueCon, leftJoinCon }, index) => {
+    querytables.forEach(({ table, keys = [], totalKeys = [], accurateCon, vagueCon, leftJoinCon }, index) => {
       if (leftJoinCon) {
         qTables.push(`left join ${table} on ${leftJoinCon.join('and')}`);
       } else {
@@ -244,7 +245,7 @@ class BaseService extends Service {
       const key = keys.map(key => {
         return `${table}.${key}`;
       });
-      qKeys.push(...key);
+      qKeys.push(...key, ...totalKeys);
 
       // 精确查询条件
       if (accurateCon) {
@@ -264,8 +265,20 @@ class BaseService extends Service {
       cb({ qCondition });
     }
 
-    const sql = `select ${qKeys.join(',')} from ${qTables.join(' ')} ${qCondition.length ? 'where ' : ' '} ${qCondition.join(' and ')} ${page ? ` limit ${page.pageSize} offset ${(page.pageNum - 1) * page.pageSize}` : ''};`;
-    const totalSql = `select count(1) from ${qTables.join(' ')} ${qCondition.length ? 'where ' : ' '} ${qCondition.join(' and ')};`;
+    const sql = `select
+      ${qKeys.join(',')}
+    from
+      ${qTables.join(' ')}
+    ${qCondition.length ? 'where ' : ' '} ${qCondition.join(' and ')}
+    ${page ? ` limit ${page.pageSize} offset ${(page.pageNum - 1) * page.pageSize}` : ''}
+    ${groupBy ? `group by ${groupBy}` : ''}
+    ;`;
+    const totalSql = `select
+      count(1)
+    from
+      ${qTables.join(' ')} ${qCondition.length ? 'where ' : ' '} ${qCondition.join(' and ')}
+      ${groupBy ? `group by ${groupBy}` : ''}
+      ;`;
     console.log(sql, '1', totalSql, '2');
     const result = await this.app.mysql.query(sql);
     const total = await this.app.mysql.query(totalSql);

@@ -27,7 +27,7 @@ class UserService extends BaseService {
         id: res.id,
       }, app.config.jwt.secret);
 
-      delete res.id;
+      // delete res.id;
       delete res.password;
 
       const data = {

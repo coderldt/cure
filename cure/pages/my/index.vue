@@ -2,7 +2,7 @@
 	<view class="my" style="backgroundImage: url('/static/my/bgc.png')">
 		<view class="head" >
 			<view class="avatar">
-				<u--image src="https://cdn.uviewui.com/uview/album/1.jpg" width="130rpx" height="130rpx" shape="circle" ></u--image>
+				<u--image :src="userInfo.avatar" width="130rpx" height="130rpx" shape="circle" ></u--image>
 			</view>
 			<view class="info">
 				<view class="username">
@@ -11,6 +11,10 @@
 				<view class="autograph u-line-2">
 					{{ userInfo.autograph || '暂无填写' }}
 				</view>
+			</view>
+			<view class="right" @click="switchUpdateInfo">
+				<u-icon name="arrow-right" color="#6e6f70" size="25"></u-icon>
+			</text>
 			</view>
 		</view>
 		<view class="options" v-for="(item, index) in list" @click="onOptions(item)" :key="index" >
@@ -25,6 +29,7 @@
 
 <script>
 	import { isLogin } from '../../tools/veri.js'
+	import { PROFIX_UPLOAD } from '../../config/index.js'
 	export default {
 		data() {
 			return {
@@ -35,13 +40,11 @@
 					{ label: '我的测试', icon: "file-text-fill", value: 'file' },
 					{ label: '设置', icon: "setting-fill", value: 'setting' },
 				],
-				userInfo: {}
+				userInfo: {},
+				PROFIX_UPLOAD
 			}
 		},
-		onLoad() {
-
-		},
-		created() {
+		onShow() {
 			if (!isLogin()) {
 				uni.showToast({
 					title: '请先登录',
@@ -60,6 +63,7 @@
 			getDetail() {
 				const userinfo = uni.getStorageSync('userInfo')
 				this.userInfo = JSON.parse(userinfo)
+				this.userInfo.avatar = `${PROFIX_UPLOAD}${this.userInfo.avatar}`
 			},
 			onOptions(item) {
 				switch(item.value) {
@@ -75,6 +79,11 @@
 						break
 				}
 				console.log(item);
+			},
+			switchUpdateInfo() {
+				uni.navigateTo({
+					url:'/pages/my/info'
+				})
 			}
 		}
 	}
@@ -106,6 +115,13 @@
 				font-size: 25rpx;
 				color: #fff;
 				font-weight: 600;
+			}
+			
+			.info {
+				flex: 1;
+			}
+			.right {
+				display: flex;
 			}
 		}
 		

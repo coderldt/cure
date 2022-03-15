@@ -70,7 +70,7 @@ module.exports = appInfo => {
   };
 
   config.static = {
-    prefix: '/unionPublic/',
+    prefix: '/curePublic/',
   };
 
   config.multipart = {
