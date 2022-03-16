@@ -4,10 +4,15 @@ module.exports = {
   valiPaths: [
     '/cureApi/star/update',
     '/cureApi/star/list',
-    '/cureApi/question/updateQuestion',
+
     '/cureApi/reply/list',
     '/cureApi/reply/add',
     '/cureApi/user/myReply',
     '/cureApi/reply/updateReply',
+    '/cureApi/user/getReplyStar',
+    '/cureApi/reply/delete',
+
+    '/cureApi/question/add',
+    '/cureApi/question/updateQuestion',
   ],
 };

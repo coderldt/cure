@@ -219,7 +219,7 @@ class BaseService extends Service {
    * @param {*} cb 回调自定义内容函数
    * @return { code, data, msg }
    */
-  async multiTableQuery(querytables, queryCondition, page, groupBy, cb) {
+  async multiTableQuery(querytables, queryCondition, page, groupBy, orderBy, cb) {
     // if (!page.pageNum || !page.pageSize) {
     //   return {
     //     code: 500,
@@ -270,15 +270,16 @@ class BaseService extends Service {
     from
       ${qTables.join(' ')}
     ${qCondition.length ? 'where ' : ' '} ${qCondition.join(' and ')}
-    ${page ? ` limit ${page.pageSize} offset ${(page.pageNum - 1) * page.pageSize}` : ''}
-    ${groupBy ? `group by ${groupBy}` : ''}
+    ${groupBy ? `group by ${groupBy}` : ' '}
+    ${orderBy ? `ORDER by ${orderBy}` : ' '}
+    ${page ? ` limit ${page.pageSize} offset ${(page.pageNum - 1) * page.pageSize}` : ' '}
     ;`;
     const totalSql = `select
       count(1)
     from
       ${qTables.join(' ')} ${qCondition.length ? 'where ' : ' '} ${qCondition.join(' and ')}
-      ${groupBy ? `group by ${groupBy}` : ''}
       ;`;
+      // ${groupBy ? `group by ${groupBy}` : ''}
     console.log(sql, '1', totalSql, '2');
     const result = await this.app.mysql.query(sql);
     const total = await this.app.mysql.query(totalSql);

@@ -5,3 +5,7 @@ import axios from '../axios.js'
 export function update (data) {
 	return axios.post({ url: '/update', data })
 }
+
+export function getReplyStar() {
+	return axios.post({ url: '/user/getReplyStar' })
+}

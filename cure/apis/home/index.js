@@ -29,6 +29,10 @@ export function questionUpdate (data) {
 	return axios.post({ url: '/question/updateQuestion', data })
 }
 
+export function questionAdd (data) {
+	return axios.post({ url: '/question/add', data })
+}
+
 // 点赞评论
 export function updateReply (data) {
 	return axios.post({ url: '/reply/updateReply', data })
@@ -37,4 +41,11 @@ export function updateReply (data) {
 // 回复评论
 export function addReply (data) {
 	return axios.post({ url: '/reply/add', data })
+}
+export function deleteReply (data) {
+	return axios.post({ url: '/reply/delete', data })
+}
+
+export function getMyReply () {
+	return axios.post({ url: '/user/myReply' })
 }

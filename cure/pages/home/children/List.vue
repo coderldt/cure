@@ -14,6 +14,7 @@
 	export default {
 		props: {
 			startList: Array,
+			labelList: Array,
 			search: String,
 			isLogin: Boolean
 		},

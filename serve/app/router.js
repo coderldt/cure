@@ -76,6 +76,8 @@ module.exports = app => {
   router.post('/user/myReply', controller.question.reply.myReply);
   router.post('/user/myArticle', controller.sys.article.myArticle);
   router.post('/user/myQuestions', controller.question.index.myQuestions);
+  // 获取我的点赞评论表
+  router.post('/user/getReplyStar', controller.question.reply.getMyReply);
 
 
   // 随机出题
@@ -84,3 +86,74 @@ module.exports = app => {
   router.post('/subject/testHistory', controller.subject.testSubject.testHistory);
 
 };
+
+
+// const { title, pageNum = 1 } = this.ctx.request.body;
+
+//     const querytables = [
+//       {
+//         table: 'questions',
+//         keys: [ '*' ],
+//         vagueCon: {},
+//       },
+//       {
+//         table: 'sys_user',
+//         keys: [ 'username', 'avatar' ],
+//         leftJoinCon: [ 'questions.userId = sys_user.id' ],
+//       },
+//       {
+//         table: 'user_similar',
+//         keys: [ ],
+//         totalKeys: [ 'count(user_similar.questionId) as count' ],
+//         leftJoinCon: [ 'questions.id = user_similar.questionId' ],
+//       },
+//       // {
+//       //   table: 'question_reply',
+//       //   keys: [ ],
+//       //   totalKeys: [ 'count(question_reply.questionId) as commentCount' ],
+//       //   leftJoinCon: [ 'questions.id = question_reply.questionId' ],
+//       // },
+//     ];
+
+//     if (title) {
+//       querytables[0].vagueCon.title = title;
+//     }
+
+//     const res = await this.service.multiTableQuery(querytables, [], { pageNum, pageSize: 5 }, 'questions.id', 'commentCount desc');
+//     if (res.code === 200) {
+//       const { result, pageNum, total } = res.data;
+
+//       let sqlRes = null;
+//       let replySqlRes = null;
+//       const map = {};
+
+//       if (result.length) {
+//         const sql = `select id, questionId from question_reply where questionId in (${result.map(i => `'${i.id}'`).join(',')})`;
+//         const replySql = `select id, questionId from question_reply where replyId in (${result.map(i => `'${i.id}'`).join(',')})`;
+//         sqlRes = await this.service.sql(sql);
+//         replySqlRes = await this.service.sql(replySql);
+
+//         sqlRes.forEach(i => {
+//           if (map[i.questionId]) {
+//             map[i.questionId] += 1;
+//           } else {
+//             map[i.questionId] = 1;
+//           }
+//         });
+//         replySqlRes.forEach(i => {
+//           if (map[i.questionId]) {
+//             map[i.questionId] += 1;
+//           } else {
+//             map[i.questionId] = 1;
+//           }
+//         });
+//       }
+//       result.forEach(i => {
+//         i.commentCount = (map[i.id] || 0);
+//       });
+
+//       this.success({ data: { data: result, pageNum, total } });
+//       // this.success({ data: res.data });
+//     } else {
+//       this.error({ msg: '查询失败' });
+//     }

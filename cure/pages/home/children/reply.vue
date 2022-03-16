@@ -16,13 +16,14 @@
 						{{item.createTime}}
 					</view>
 					<view class="control">
-						<u-icon name="thumb-up" size="20" @click="updateUserReply(item.id)"></u-icon>
+						<u-icon :name=" item.checked ? 'thumb-up-fill' : 'thumb-up'" :color="item.checked ? 'red' : 'black'" size="20" @click="updateUserReply(item)"></u-icon>
 						{{item.countReply ? item.countReply : ''}}
 						<u-icon class="chat" name="chat" v-if="type === 'one'" @click="onReply(item)" color="#a1a1a1" size="20"></u-icon>
+						<u-icon v-if="item.isDel" class="trash" name="trash" @click="onTrash(item, index)" color="#a1a1a1" size="20"></u-icon>
 					</view>
 				</view>
 				<view class="replyOfreply" v-if="item.children">
-					<ReplyList :replyList="item.children" type="two"></ReplyList>
+					<ReplyList :replyList="item.children" type="two" @frensh="frensh"></ReplyList>
 				</view>
 			</view>
 		</view>
@@ -37,7 +38,7 @@
 
 <script>
 	import { PROFIX_UPLOAD } from '../../../config/index.js'
-	import { addReply, updateReply } from '../../../apis/home/index.js'
+	import { addReply, updateReply, deleteReply } from '../../../apis/home/index.js'
 	export default {
 		props: {
 			replyList: {
@@ -75,6 +76,7 @@
 					uni.showToast({
 						title: '回复成功'
 					})
+					this.$emit('frensh')
 					this.show = false
 				} else {
 					uni.showToast({
@@ -83,12 +85,31 @@
 					})
 				}
 			},
-			async updateUserReply(id) {
-				const res = await updateReply({ replyId: id })
+			async updateUserReply(item) {
+				if (item.checked) {
+					if (item.countReply >= 1) {
+						item.countReply -= 1
+					}
+				} else {
+					item.countReply += 1
+				}
+				item.checked = !item.checked
+				const res = await updateReply({ replyId: item.id })
 				uni.showToast({
 					title: res.msg,
 					icon: `${res.code === 200 ? 'none' : 'error' }`
 				})
+			},
+			async onTrash(item, index) {
+				const res = await deleteReply({ id: item.id })
+				uni.showToast({
+					title: res.msg,
+					icon: `${res.code === 200 ? 'none' : 'error' }`
+				})
+				this.replyList.splice(index, 1)
+			},
+			frensh() {
+				this.$emit('frensh')
 			}
 		},
 	}

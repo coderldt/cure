@@ -1,11 +1,31 @@
 <template>
-	<view class="addQuestion">
+	<view class="addQuestion" @click="addQuestion">
 		<u-icon name="edit-pen" color="#b1d9f1" size="28"></u-icon>
 		<text>提问</text>
+		
 	</view>
 </template>
 
 <script>
+	export default {
+		data() {
+			return {
+				show: false,
+				replyPopup: {
+					content: ''
+				},
+				replyPlaceholder: '111'
+			}
+		},
+		methods: {
+			reply() {
+				
+			},
+			addQuestion() {
+				this.$emit('addQuestion')
+			}
+		}
+	}
 </script>
 
 <style lang="scss" scoped>

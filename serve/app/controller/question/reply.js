@@ -44,6 +44,12 @@ class ReplyController extends BaseController {
     }
   }
 
+  async getMyReply() {
+    const { id } = this.ctx.userinfo;
+    const resList = await this.replyUserservice.query({ userId: id });
+    this.success({ data: resList });
+  }
+
   async add() {
     const { questionId, content, replyId } = this.ctx.request.body;
     if (!questionId || !content) {

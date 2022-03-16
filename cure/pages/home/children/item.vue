@@ -32,17 +32,22 @@
 			{{item.desc}}
 		</view>
 		<view class="count">
-			<!-- <text @click="onCommentChange(item)">{{item.commentCount}}有用</text> -->
-			<text class="comment" v-if="!item.reply || !item.reply.length" @click="onCommentChange(item)">{{item.commentCount}}评论</text>
-			<ReplyList class="reply" v-if="item.reply && item.reply.length" :replyList="item.reply"></ReplyList>
+			<text class="comment"  @click="onCommentChange(item)" :style="{ color: `${ item.commentCount ? '#b1d6eb' : '#eaeaea' }` }">查看评论</text>
+			<text class="replying" @click="onReply(item)">回复评论</text>
+			<ReplyList class="reply" v-if="item.reply && item.reply.length" :replyList="item.reply" @frensh="frensh"></ReplyList>
 		</view>
+		<u-popup :show="show" @close="show = false">
+			<view class="replyPopop">
+				<u-textarea v-model="replyPopup.content" :placeholder="replyPlaceholder"></u-textarea>
+				<u-button type="primary" class="btn" @click="reply">回复</u-button>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
 <script>
-	import { starUpdate, replyList } from "../../../apis/home/index.js"
+	import { starUpdate, replyList, addReply } from "../../../apis/home/index.js"
 	import { PROFIX_UPLOAD } from '../../../config/index.js'
-	// import ReplyList from './reply.vue'
 	export default {
 		props: {
 			item: {
@@ -60,12 +65,21 @@
 		data() {
 			return {
 				labels: [],
-				PROFIX_UPLOAD
+				replyStar: [],
+				PROFIX_UPLOAD,
+				id: '',
+				show: false,
+				replyPopup: {
+					replyId: '',
+					content: '',
+					questionId: ''
+				},
+				replyPlaceholder: '',
+				replyItem: null
 			}
 		},
 		computed: {
 			getLabels() {
-				console.log(this.item);
 				if (this.item.labels.length) {
 					const res = []
 					const labels = this.item.labels.split(',')
@@ -82,7 +96,11 @@
 			}
 		},
 		created() {
-			this.labels = JSON.parse(uni.getStorageSync('labels'))
+			this.labels = (JSON.parse(uni.getStorageSync('labels')) || [])
+			this.replyStar = (JSON.parse(uni.getStorageSync('replyStar')) || [])
+			if (this.isLogin) {
+				this.id = JSON.parse(uni.getStorageSync('userInfo')).id
+			}
 		},
 		methods: {
 			async onSimilarChange(item) {
@@ -96,18 +114,80 @@
 				} else {
 					uni.showToast({
 						title: '登录后即可同感',
+						icon:"none"
 					})
 				}
 			},
 			async onCommentChange(item) {
 				if (this.isLogin) {
+					if (item.commentCount <= 0) {
+						return uni.showToast({
+							title: '暂无评论，请你来个评论吧。',
+							icon:"none"
+						})
+					}
+					JSON.parse(uni.getStorageSync('userInfo'))
 					const res = await replyList({ questionId: item.id })
-					item.reply = res.data
+					item.reply = res.data.map(i => {
+						if (i.rUserId === this.id) {
+							i.isDel = true
+						} else {
+							i.isDel = false
+						}
+						if (this.replyStar.find(reply => reply.replyId === i.id)) {
+							i.checked = true
+						} else {
+							i.checked = false
+						}
+						if (i.children) {
+							i.children.forEach(item => {
+								if (item.rUserId === this.id) {
+									item.isDel = true
+								} else {
+									item.isDel = false
+								}
+								if (this.replyStar.find(reply => reply.replyId === item.id)) {
+									item.checked = true
+								} else {
+									item.checked = false
+								}
+							})
+						}
+						return i
+					})
 				} else {
 					uni.showToast({
-						title: '登录后即可同感',
+						title: '登录后即可查看评论',
+						icon:"none"
 					})
 				}
+			},
+			onReply(item) {
+				this.replyPopup.content = ''
+				this.replyPopup.replyId = ''
+				this.replyPopup.questionId = item.id
+				this.replyPlaceholder = `回复：${item.title}`
+				this.replyItem = item
+				this.show = true 
+			},
+			async reply() {
+				const res = await addReply(this.replyPopup)
+				if (res.code === 200) {
+					uni.showToast({
+						title: '回复成功'
+					})
+					this.item.commentCount += 1
+					this.onCommentChange(this.replyItem)
+					this.show = false
+				} else {
+					uni.showToast({
+						title: '回复失败',
+						icon:"error"
+					})
+				}
+			},
+			frensh() {
+				this.onCommentChange(this.item)
 			}
 		}
 	}
@@ -201,6 +281,16 @@
 				padding-top: 20rpx;
 				border-top: 1px solid #eaeaea;
 			}
+			
+			.replying {
+				margin-left: 30rpx;
+			}
+		}
+	}
+	.replyPopop {
+		padding: 20rpx;
+		.btn {
+			margin-top: 20rpx;
 		}
 	}
 </style>
