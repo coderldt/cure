@@ -9,3 +9,13 @@ export function update (data) {
 export function getReplyStar() {
 	return axios.post({ url: '/user/getReplyStar' })
 }
+
+// 测试
+export function getTestType() {
+	let data = { id: 5 }
+	return axios.post({ url: '/dictChildren/list', data })
+}
+
+export function getTestsType(params) {
+	return axios.post({ url: '/dictChildren/list', params })
+}

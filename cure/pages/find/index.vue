@@ -7,7 +7,7 @@
 			<view class="desc">
 				{{item.desc}}
 			</view>
-			<button :style="{ background: item.btnColor }">{{item.btn}}</button>
+			<button :style="{ background: item.btnColor }" @click="onItemClick(item)">{{item.btn}}</button>
 		</view>
 	</view>
 </template>
@@ -17,9 +17,25 @@
 		data() {
 			return {
 				list: [
-					{ title: '测测你的焦虑类型', desc: '心里测试，测你的焦虑程度', btn: '开始测试', btnColor: "#f09a2b", bgc: "#2d8b9e" },
-					{ title: '推送文章', desc: '每日推送优质文章，供你参考', btn: '开始查看', btnColor: "#8858f8", bgc: "#01042a" },
+					{ type: 'test', title: '测测你的焦虑类型', desc: '心里测试，测你的焦虑程度', btn: '开始测试', btnColor: "#f09a2b", bgc: "#2d8b9e" },
+					{ type: 'article', title: '推送文章', desc: '每日推送优质文章，供你参考', btn: '开始查看', btnColor: "#8858f8", bgc: "#01042a" },
 				]
+			}
+		},
+		methods: {
+			onItemClick(item) {
+				switch (item.type) {
+					case 'test':
+						uni.navigateTo({
+							url:'/pages/find/test/index'
+						})
+						break
+					case 'article':
+						uni.navigateTo({
+							url:'/pages/find/article/index'
+						})
+						break
+				}
 			}
 		}
 	}

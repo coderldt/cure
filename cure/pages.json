@@ -7,6 +7,39 @@
 			}
 		},
 		{
+			"path":"pages/find/index",
+			"style": {
+				"navigationBarTitleText": "发现"
+			}
+		},
+		{
+			"path":"pages/find/test/index",
+			"style": {
+				"navigationBarTitleText": "测试分类",
+				"navigationBarBackgroundColor":"#eae2d1"
+			}
+		},
+		{
+			"path":"pages/find/test/subject",
+			"style": {
+				"navigationBarTitleText": "测试题",
+				"navigationBarBackgroundColor":"#eae2d1"
+			}
+		},
+		{
+			"path":"pages/find/test/result",
+			"style": {
+				"navigationBarTitleText": "测试结果",
+				"navigationBarBackgroundColor":"#eae2d1"
+			}
+		},
+		{
+			"path":"pages/find/article/index",
+			"style": {
+				"navigationBarTitleText": "推荐文章"
+			}
+		},
+		{
 			"path": "pages/my/index",
 			"style": {
 				"navigationStyle":"custom"

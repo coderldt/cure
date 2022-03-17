@@ -8,7 +8,7 @@
       "name": "pnpm",
       "message": "Missing script: dev",
       "code": "ERR_PNPM_NO_SCRIPT",
-      "stack": "pnpm: Missing script: dev\n    at Object.handler (C:\\Users\\chao.lv\\AppData\\Roaming\\nvm\\v14.12.0\\node_modules\\pnpm\\dist\\pnpm.cjs:177856:15)\n    at async C:\\Users\\chao.lv\\AppData\\Roaming\\nvm\\v14.12.0\\node_modules\\pnpm\\dist\\pnpm.cjs:182106:21\n    at async run (C:\\Users\\chao.lv\\AppData\\Roaming\\nvm\\v14.12.0\\node_modules\\pnpm\\dist\\pnpm.cjs:182080:34)\n    at async runPnpm (C:\\Users\\chao.lv\\AppData\\Roaming\\nvm\\v14.12.0\\node_modules\\pnpm\\dist\\pnpm.cjs:182299:5)\n    at async C:\\Users\\chao.lv\\AppData\\Roaming\\nvm\\v14.12.0\\node_modules\\pnpm\\dist\\pnpm.cjs:182291:7"
+      "stack": "pnpm: Missing script: dev\n    at Object.handler (C:\\Users\\chao.lv\\AppData\\Roaming\\npm\\pnpm-global\\5\\node_modules\\.pnpm\\pnpm@6.32.3\\node_modules\\pnpm\\dist\\pnpm.cjs:177943:15)\n    at async C:\\Users\\chao.lv\\AppData\\Roaming\\npm\\pnpm-global\\5\\node_modules\\.pnpm\\pnpm@6.32.3\\node_modules\\pnpm\\dist\\pnpm.cjs:182194:21\n    at async run (C:\\Users\\chao.lv\\AppData\\Roaming\\npm\\pnpm-global\\5\\node_modules\\.pnpm\\pnpm@6.32.3\\node_modules\\pnpm\\dist\\pnpm.cjs:182168:34)\n    at async runPnpm (C:\\Users\\chao.lv\\AppData\\Roaming\\npm\\pnpm-global\\5\\node_modules\\.pnpm\\pnpm@6.32.3\\node_modules\\pnpm\\dist\\pnpm.cjs:182387:5)\n    at async C:\\Users\\chao.lv\\AppData\\Roaming\\npm\\pnpm-global\\5\\node_modules\\.pnpm\\pnpm@6.32.3\\node_modules\\pnpm\\dist\\pnpm.cjs:182379:7"
     }
   }
 }

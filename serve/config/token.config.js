@@ -14,5 +14,9 @@ module.exports = {
 
     '/cureApi/question/add',
     '/cureApi/question/updateQuestion',
+
+    '/cureApi/subject/randomTest',
+    '/cureApi/subject/testResult',
+    '/cureApi/subject/testHistory',
   ],
 };
