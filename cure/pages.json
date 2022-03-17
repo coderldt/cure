@@ -36,13 +36,39 @@
 		{
 			"path":"pages/find/article/index",
 			"style": {
-				"navigationBarTitleText": "推荐文章"
+				"navigationBarTitleText": "推荐文章",
+				"navigationBarBackgroundColor":"#6ab5ee",
+				"navigationBarTextStyle":"white"
+			}
+		},
+		{
+			"path":"pages/find/article/detail",
+			"style": {
+				"navigationBarTitleText": "具体文章"
 			}
 		},
 		{
 			"path": "pages/my/index",
 			"style": {
 				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path": "pages/my/children/question",
+			"style": {
+				"navigationBarTitleText":"我的问题"
+			}
+		},
+		{
+			"path": "pages/my/children/test",
+			"style": {
+				"navigationBarTitleText":"测试"
+			}
+		},
+		{
+			"path": "pages/my/children/star",
+			"style": {
+				"navigationBarTitleText":"我的收藏"
 			}
 		},
 		{

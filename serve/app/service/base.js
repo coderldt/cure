@@ -121,6 +121,8 @@ class BaseService extends Service {
         result = await this.app.mysql.delete(this.table, params);
       }
 
+      console.log(result, 'resultresult');
+
       if (result.affectedRows) {
         return {
           code: 200,
@@ -280,7 +282,6 @@ class BaseService extends Service {
       ${qTables.join(' ')} ${qCondition.length ? 'where ' : ' '} ${qCondition.join(' and ')}
       ;`;
       // ${groupBy ? `group by ${groupBy}` : ''}
-    console.log(sql, '1', totalSql, '2');
     const result = await this.app.mysql.query(sql);
     const total = await this.app.mysql.query(totalSql);
 

@@ -30,6 +30,7 @@
 <script>
 	import { isLogin } from '../../tools/veri.js'
 	import { PROFIX_UPLOAD } from '../../config/index.js'
+	import { getLabels } from '../../apis/sys.js'
 	export default {
 		data() {
 			return {
@@ -38,7 +39,7 @@
 					{ label: '我评论的', icon: "edit-pen-fill", value: 'editPen' },
 					{ label: '我收藏的', icon: "star-fill", value: 'star' },
 					{ label: '我的测试', icon: "file-text-fill", value: 'file' },
-					{ label: '设置', icon: "setting-fill", value: 'setting' },
+					// { label: '设置', icon: "setting-fill", value: 'setting' },
 				],
 				userInfo: {},
 				PROFIX_UPLOAD
@@ -57,6 +58,7 @@
 				}, 2000)
 			} else {
 				this.getDetail()
+				this.getLabel()
 			}
 		},
 		methods: {
@@ -65,20 +67,35 @@
 				this.userInfo = JSON.parse(userinfo)
 				this.userInfo.avatar = `${PROFIX_UPLOAD}${this.userInfo.avatar}`
 			},
+			async getLabel() {
+				const res = await getLabels()
+				if (res.code === 200) {
+					this.labelList = res.data
+					uni.setStorageSync("labels", JSON.stringify(res.data))
+				}
+			},
 			onOptions(item) {
 				switch(item.value) {
 					case 'coupon':
+						uni.navigateTo({
+							url:'/pages/my/children/question'
+						})
 						break
 					case 'editPen':
 						break
 					case 'star':
+						uni.navigateTo({
+							url:'/pages/my/children/star'
+						})
 						break
 					case 'file':
+						uni.navigateTo({
+							url:'/pages/my/children/test'
+						})
 						break
 					case 'setting':
 						break
 				}
-				console.log(item);
 			},
 			switchUpdateInfo() {
 				uni.navigateTo({

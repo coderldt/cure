@@ -18,5 +18,11 @@ module.exports = {
     '/cureApi/subject/randomTest',
     '/cureApi/subject/testResult',
     '/cureApi/subject/testHistory',
+
+    '/cureApi/testSubject/delHistory',
+
+    '/cureApi/user/myArticle',
+    '/cureApi/user/myQuestions',
+    '/cureApi/article/updateArticle',
   ],
 };

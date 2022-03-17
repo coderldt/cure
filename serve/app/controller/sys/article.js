@@ -117,6 +117,20 @@ class ArticleController extends BaseController {
       this.error({ msg: '查询失败' });
     }
   }
+
+  async detail() {
+    const { articleId } = this.ctx.request.body;
+    if (!articleId) {
+      return this.error({ data: '请选择一个文章' });
+    }
+
+    const res = await this.service.query({ id: articleId });
+    if (res.length) {
+      this.success({ data: res[0] });
+    } else {
+      this.error({ msg: '文章找不到了' });
+    }
+  }
   // async myArticle() {
   //   const { id } = this.ctx.userinfo;
   //   console.log(id);

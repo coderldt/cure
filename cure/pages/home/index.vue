@@ -67,6 +67,7 @@
 	import {
 		isLogin
 	} from '../../tools/veri.js'
+	import { mapState } from 'vuex'
 	export default {
 		components: {
 			HotList,
@@ -118,6 +119,12 @@
 				}
 			}
 		},
+		onShow() {
+			this.search = this.title
+			this.$nextTick(function(){
+				this.onSearch()
+			})
+		},
 		created() {
 			this.startList = []
 			if (isLogin()) {
@@ -130,6 +137,9 @@
 			} else {
 				this.currentTab = 'hot'
 			}
+		},
+		computed: {
+			...mapState(['title'])
 		},
 		methods: {
 			onTabClick(val) {
@@ -211,7 +221,7 @@
 	.home {
 		display: flex;
 		flex-direction: column;
-		height: calc(100vh - 182rpx);
+		height: calc(100vh - 188rpx);
 		background-color: #f8f8f8;
 
 		.search {

@@ -23,11 +23,13 @@ module.exports = app => {
   router.post('/article/add', controller.sys.article.add);
   router.post('/article/update', controller.sys.article.update);
   router.post('/article/delete', controller.sys.article.delete);
+  router.post('/article/detail', controller.sys.article.detail);
 
   router.post('/testSubject/list', controller.subject.testSubject.list);
   router.post('/testSubject/add', controller.subject.testSubject.add);
   router.post('/testSubject/update', controller.subject.testSubject.update);
   router.post('/testSubject/delete', controller.subject.testSubject.delete);
+  router.post('/testSubject/delHistory', controller.subject.testSubject.delHistory);
 
   router.post('/subjectAnswer/list', controller.subject.subjectAnswer.list);
   router.post('/subjectAnswer/add', controller.subject.subjectAnswer.add);

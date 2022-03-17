@@ -145,8 +145,37 @@ class TestSubjectController extends BaseController {
   async testHistory() {
     const { id } = this.ctx.userinfo;
 
-    const res = await this.useSubjectService.query({ userId: id });
-    this.success({ data: res });
+    const querytables = [
+      {
+        table: 'user_subject',
+        keys: [ 'id', 'content', 'score' ],
+        accurateCon: { userId: id },
+      },
+      {
+        table: 'sys_dict_chindren',
+        keys: [ 'label' ],
+        leftJoinCon: [ 'user_subject.typeId = sys_dict_chindren.value' ],
+      },
+    ];
+    const res = await this.service.multiTableQuery(querytables, []);
+    if (res.code === 200) {
+      this.success({ data: res.data.result });
+    } else {
+      this.error({ msg: '查询失败' });
+    }
+  }
+
+  async delHistory() {
+    const { id } = this.ctx.request.body;
+    if (!id) {
+      return this.error({ data: '参数错误' });
+    }
+    const res = await this.useSubjectService.cDelData({ id });
+    if (res.code === 200) {
+      this.success({ msg: '删除成功' });
+    } else {
+      this.error({ msg: '删除失败' });
+    }
   }
 
   randomInteger(min, max) {

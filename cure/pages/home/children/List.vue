@@ -44,6 +44,7 @@
 						icon: 'none'
 					})
 				}
+				this.page.pageNum += 1
 				this.get()
 			},
 			async get() {
@@ -61,9 +62,9 @@
 						return i
 					})
 					this.list = this.list.concat(newList)
-					this.page.pageNum = pageNum + 1
+					this.page.pageNum = pageNum
 					this.page.total = total
-					this.page.maxPage = Math.ceil(total / pageNum)
+					this.page.maxPage = Math.ceil(total / 5)
 					uni.showToast({
 						title: '加载成功',
 						icon: "none"
