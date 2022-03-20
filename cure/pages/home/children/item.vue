@@ -96,10 +96,12 @@
 			}
 		},
 		created() {
-			this.labels = (JSON.parse(uni.getStorageSync('labels')) || [])
-			this.replyStar = (JSON.parse(uni.getStorageSync('replyStar')) || [])
+			this.getStoreData(['labels', 'replyStar'])
 			if (this.isLogin) {
-				this.id = JSON.parse(uni.getStorageSync('userInfo')).id
+				const userInfo = uni.getStorageSync('userInfo')
+				if (userInfo) {
+					this.id = JSON.parse(userInfo).id
+				}
 			}
 		},
 		methods: {
@@ -188,6 +190,14 @@
 			},
 			frensh() {
 				this.onCommentChange(this.item)
+			},
+			getStoreData(types) {
+				types.forEach(type => {
+					const data = uni.getStorageSync(type)
+					if (data) {
+						this[type] = JSON.parse(data)
+					}
+				})
 			}
 		}
 	}
@@ -245,7 +255,7 @@
 			}
 			
 			.similar {
-				font-size: 15rpx;
+				font-size: 21rpx;
 				width: 72rpx;
 				height: 72rpx;
 				color: #95cbea;

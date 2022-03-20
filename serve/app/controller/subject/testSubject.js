@@ -80,11 +80,11 @@ class TestSubjectController extends BaseController {
     const subject = await this.service.query({ typeId });
     let subList = [];
     if (subject.length <= 10) {
-      subList = subject;
+      subList = subject.map(i => [ i ]);
     } else {
       subList = this.randomList(subject, 10);
     }
-
+    console.log(subList);
     const ids = subList.map(i => ` '${i[0].id}' `);
     const answerList = await this.service.cMysqlQuery({ table: 'subject_answer', keys: [ '*' ], where: [ `subjectId in (${ids.join(',')})` ] });
 

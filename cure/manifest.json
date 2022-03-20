@@ -1,7 +1,7 @@
 {
-    "name" : "cure",
-    "appid" : "",
-    "description" : "",
+    "name" : "治舆",
+    "appid" : "__UNI__7B48200",
+    "description" : "治舆",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -43,7 +43,9 @@
             /* ios打包配置 */
             "ios" : {},
             /* SDK配置 */
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "ad" : {}
+            }
         }
     },
     /* 快应用特有相关 */

@@ -67,7 +67,7 @@
 	import {
 		isLogin
 	} from '../../tools/veri.js'
-	import { mapState } from 'vuex'
+	import { mapState, mapMutations } from 'vuex'
 	export default {
 		components: {
 			HotList,
@@ -76,7 +76,7 @@
 		},
 		data() {
 			return {
-				search: "",
+				search: "111",
 				tabs: [{
 						label: '推荐',
 						value: 'recommend'
@@ -121,14 +121,15 @@
 		},
 		onShow() {
 			this.search = this.title
-			this.$nextTick(function(){
-				this.onSearch()
-			})
-		},
-		created() {
 			this.startList = []
-			if (isLogin()) {
-				this.isLogin = true
+			this.$nextTick(function(){
+				if (this.title) {
+					this.onSearch()
+				}
+				this.SAVE_TITLE('')
+			})
+			this.isLogin = isLogin()
+			if (this.isLogin) {
 				this.getLabel()
 				this.getStarList()
 				this.getReply()
@@ -142,6 +143,7 @@
 			...mapState(['title'])
 		},
 		methods: {
+			...mapMutations(['SAVE_TITLE']),
 			onTabClick(val) {
 				this.currentTab = val
 				if (isLogin()) {
@@ -159,6 +161,7 @@
 				const res = await starList()
 				if (res.code === 200) {
 					this.startList = res.data
+					console.log(this.startList);
 					uni.setStorageSync("stats", JSON.stringify(res.data))
 				}
 			},
@@ -221,7 +224,7 @@
 	.home {
 		display: flex;
 		flex-direction: column;
-		height: calc(100vh - 188rpx);
+		height: calc(100vh);
 		background-color: #f8f8f8;
 
 		.search {
@@ -251,7 +254,8 @@
 		}
 
 		.content {
-			// height: calc(100vh - 144rpx - 196rpx - 100rpx);
+			// flex: 1;
+			// height: calc(100vh - 144rpx);
 			// overflow-y: auto;
 		}
 	}

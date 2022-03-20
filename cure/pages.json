@@ -1,6 +1,15 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "社区-问题",
+				"navigationBarBackgroundColor":"#6ab5ee",
+				"navigationBarTextStyle":"white",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
 			"path": "pages/my/info",
 			"style": {
 				"navigationBarTitleText": "个人信息"
@@ -39,6 +48,18 @@
 				"navigationBarTitleText": "推荐文章",
 				"navigationBarBackgroundColor":"#6ab5ee",
 				"navigationBarTextStyle":"white"
+			}
+		},
+		{
+			"path":"pages/find/bottle/index",
+			"style": {
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path":"pages/find/bottle/myBottle",
+			"style": {
+				"navigationBarTitleText":"我的瓶子"
 			}
 		},
 		{
@@ -81,15 +102,6 @@
 			"path": "pages/login/register",
 			"style": {
 				"navigationBarTitleText": "注册"
-			}
-		},
-		{
-			"path": "pages/home/index",
-			"style": {
-				"navigationBarTitleText": "社区-问题",
-				"navigationBarBackgroundColor":"#6ab5ee",
-				"navigationBarTextStyle":"white",
-				"enablePullDownRefresh": true
 			}
 		}
 	],

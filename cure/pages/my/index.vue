@@ -28,7 +28,7 @@
 </template>
 
 <script>
-	import { isLogin } from '../../tools/veri.js'
+	import { isLogin, clearStore } from '../../tools/veri.js'
 	import { PROFIX_UPLOAD } from '../../config/index.js'
 	import { getLabels } from '../../apis/sys.js'
 	export default {
@@ -39,6 +39,7 @@
 					{ label: '我评论的', icon: "edit-pen-fill", value: 'editPen' },
 					{ label: '我收藏的', icon: "star-fill", value: 'star' },
 					{ label: '我的测试', icon: "file-text-fill", value: 'file' },
+					{ label: '退出登录', icon: "error-circle", value: 'loginOut' },
 					// { label: '设置', icon: "setting-fill", value: 'setting' },
 				],
 				userInfo: {},
@@ -66,6 +67,7 @@
 				const userinfo = uni.getStorageSync('userInfo')
 				this.userInfo = JSON.parse(userinfo)
 				this.userInfo.avatar = `${PROFIX_UPLOAD}${this.userInfo.avatar}`
+				console.log(this.userInfo.avatar);
 			},
 			async getLabel() {
 				const res = await getLabels()
@@ -93,9 +95,17 @@
 							url:'/pages/my/children/test'
 						})
 						break
-					case 'setting':
+					case 'loginOut':
+						this.logOut()
 						break
 				}
+			},
+			logOut() {
+				clearStore()
+				this.userInfo = {}
+				uni.switchTab({
+					url:'/pages/home/index'
+				})
 			},
 			switchUpdateInfo() {
 				uni.navigateTo({

@@ -6,7 +6,7 @@
 			</u-search>
 		</view>
 		<view class="content">
-			<scroll-view style="height: calc(100vh - 288rpx);" :scroll-y="true" @scrolltolower="scrolltolower">
+			<scroll-view style="height: calc(100vh - 188rpx);" :scroll-y="true" @scrolltolower="scrolltolower">
 				<view class="list">
 					<Item class="item" v-for="(item, index) in list" :key="index" :item="item" :isLogin="isLogin"></Item>
 					<Loading v-if="isloading" :isloading="isloading"></Loading>

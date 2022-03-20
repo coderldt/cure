@@ -24,5 +24,11 @@ module.exports = {
     '/cureApi/user/myArticle',
     '/cureApi/user/myQuestions',
     '/cureApi/article/updateArticle',
+
+    '/cureApi/bottle/list',
+    '/cureApi/bottle/add',
+    '/cureApi/bottle/reply',
+    '/cureApi/bottle/delete',
+    '/cureApi/bottle/addMyBottle',
   ],
 };

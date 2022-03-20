@@ -23,6 +23,7 @@
 
 <script>
 import { login } from '../../apis/login.js'
+import { clearStore } from '../../tools/veri.js'
 export default {
 	data() {
 		return {
@@ -50,10 +51,12 @@ export default {
 			}
 			
 			this.loading = true
+			clearStore()
 			const res = await login({ phone: this.tel, password: this.password })
 			if (res.code === 200) {
 				uni.setStorageSync('token', res.data.token)
 				uni.setStorageSync('userInfo', JSON.stringify(res.data.userInfo))
+				console.log(res.data);
 				uni.showToast({
 					title: res.msg,
 					duration: 1500,

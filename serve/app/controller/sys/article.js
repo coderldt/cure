@@ -106,7 +106,7 @@ class ArticleController extends BaseController {
       },
       {
         table: 'article',
-        keys: [ 'title' ],
+        keys: [ 'title', 'id as articleId' ],
         leftJoinCon: [ 'article.id = user_article.articleId' ],
       },
     ];

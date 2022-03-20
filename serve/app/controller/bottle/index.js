@@ -12,8 +12,25 @@ class BottleController extends BaseController {
 
   async list() {
     const { id } = this.ctx.userinfo;
-    const res = await this.botleUserService.query({ userId: id });
-    this.success({ data: res });
+    const querytables = [
+      {
+        table: 'user_bottle',
+        keys: [ '*' ],
+        accurateCon: { userId: id },
+      },
+      {
+        table: 'drifting_bottle',
+        keys: [ 'content' ],
+        leftJoinCon: [ 'user_bottle.bottleId = drifting_bottle.id' ],
+        accurateCon: { status: 2 },
+      },
+    ];
+    const res = await this.service.multiTableQuery(querytables, []);
+    if (res.code === 200) {
+      this.success({ data: res.data });
+    } else {
+      this.error({ msg: '查询失败' });
+    }
   }
 
   // 抛出瓶子

@@ -8,4 +8,13 @@ function isLogin() {
 	return false
 }
 
-export { isLogin }
+function clearStore () {
+	uni.removeStorageSync('token')
+	uni.removeStorageSync('userInfo')
+	uni.removeStorageSync('labels')
+	uni.removeStorageSync('reply')
+	uni.removeStorageSync('replyStar')
+	uni.removeStorageSync('stats')
+}
+
+export { isLogin, clearStore }

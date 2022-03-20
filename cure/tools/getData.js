@@ -25,4 +25,3 @@ const getStat = async () {
 	
 }
 
-export { getLabel, getStat }

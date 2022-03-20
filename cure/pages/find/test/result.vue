@@ -16,7 +16,7 @@
 					分数解析：
 				</view>
 				<view class="value">
-					{{msg.result}}{{msg.result}}{{msg.result}}{{msg.result}}
+					{{msg.result}}
 				</view>
 			</view>
 		</view>
@@ -39,6 +39,12 @@
 				const res = await getSubjectResult({ typeId, score })
 				if (res.code === 200) {
 					this.msg = res.data
+				} else {
+					uni.showToast({
+						title:res.msg,
+						icon:'error',
+						duration:2500
+					})
 				}
 			}
 		}

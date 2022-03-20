@@ -18,7 +18,7 @@
 		methods: {
 			async detail() {
 				uni.navigateTo({
-					url:`/pages/find/article/detail?id=${this.item.id}`
+					url:`/pages/find/article/detail?id=${this.item.articleId}`
 				})
 			},
 		}

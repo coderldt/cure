@@ -1,7 +1,6 @@
 <template>
 	<view class="info">
 		<u-collapse
-			:value="[1, 2, 3]"
 		  >
 		    <u-collapse-item
 		      title="用户名字"
@@ -11,7 +10,9 @@
 				    placeholder="请输入内容"
 				    border="surround"
 				    v-model="userInfo.username"
+					maxlength="8"
 				  ></u--input>
+				  <view class="limit">用户名字最长8个字符</view>
 		    </u-collapse-item>
 		    <u-collapse-item
 		      title="个性头像"
@@ -23,7 +24,7 @@
 		      title="个人签名"
 		      name="Numerous tools"
 		    >
-				<u--textarea v-model="userInfo.autograph" placeholder="请输入个性签名" ></u--textarea>
+				<u--textarea v-model="userInfo.autograph" maxlength="35" count placeholder="请输入个性签名" ></u--textarea>
 		    </u-collapse-item>
 		  </u-collapse>
 		  <view class="submitBtn">
@@ -41,7 +42,10 @@
 		},
 		data() {
 			return {
-				userInfo: {},
+				userInfo: {
+					username: '',
+					autograph: ''
+				},
 				defaultImg: ""
 			}
 		},
@@ -51,8 +55,10 @@
 		methods: {
 			getDetail() {
 				const userinfo = uni.getStorageSync('userInfo')
-				this.userInfo = JSON.parse(userinfo)
-				this.defaultImg = this.userInfo.avatar
+				if (userinfo) {
+					this.userInfo = JSON.parse(userinfo)
+					this.defaultImg = this.userInfo.avatar
+				}
 			},
 			upload(val) {
 				this.userInfo.avatar = val
@@ -90,6 +96,11 @@
 			left: 40rpx;
 			right: 40rpx;
 			bottom: 40rpx;
+		}
+		
+		.limit {
+			text-align: right;
+			color: #cfcfcf;
 		}
 	}
 </style>

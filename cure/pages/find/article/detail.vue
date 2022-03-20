@@ -9,6 +9,7 @@
 		</view>
 		<Loading v-if="isloading" :isloading="isloading"></Loading>
 		<u-empty
+			class="empty"
 			mode="data"
 			icon="http://cdn.uviewui.com/uview/empty/car.png"
 			text="找不到该文章"
@@ -49,15 +50,18 @@
 
 <style lang="scss" scoped>
 	.articleDetail {
-		display: flex;
-		align-items: center;
-		justify-content: center;
 		min-height: calc(100vh - 130rpx);
 		padding: 20rpx;
 		.title {
 			font-size: 50rpx;
 			font-weight: 600;
 			text-align: center;
+		}
+		
+		.empty {
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 	}
 </style>

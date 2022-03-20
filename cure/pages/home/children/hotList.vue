@@ -1,5 +1,5 @@
 <template>
-	<scroll-view style="height: calc(100vh - 444rpx);" :scroll-y="true" @scrolltolower="scrolltolower">
+	<scroll-view style="height: calc(100vh - 244rpx);" :scroll-y="true" @scrolltolower="scrolltolower">
 		<view class="hotList">
 			<Item class="item" v-for="(item, index) in list" :key="index" :item="item" :isLogin="isLogin"></Item>
 			<Loading v-if="isloading" :isloading="isloading"></Loading>
@@ -33,7 +33,9 @@
 			}
 		},
 		created() {
-			this.getList()
+			this.$nextTick(function(){
+				this.getList()
+			})
 		},
 		methods: {
 			async getList() {
