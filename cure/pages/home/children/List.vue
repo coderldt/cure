@@ -13,10 +13,10 @@
 	import { getList } from '../../../apis/home/index.js'
 	export default {
 		props: {
-			startList: Array,
 			labelList: Array,
 			search: String,
-			isLogin: Boolean
+			isLogin: Boolean,
+			userId: String
 		},
 		components: {
 			Item,
@@ -51,24 +51,14 @@
 			},
 			async get() {
 				this.isloading = true
-				const res = await getList({ title: this.search, pageNum: this.page.pageNum })
+				const res = await getList({ title: this.search, pageNum: this.page.pageNum, userId })
 				if (res.code === 200) {
-					console.log(res.data);
 					const { data, pageNum, total } = res.data
-					const newList = data.map(i => {
-						if (this.startList.find(startItem => startItem.questionId === i.id)) {
-							i.isStar = true
-						} else {
-							i.isStar = false
-						}
-						i.reply = []
-						return i
-					})
+					const newList = data
 					this.list = this.list.concat(newList)
 					this.page.pageNum = pageNum
 					this.page.total = total
 					this.page.maxPage = Math.ceil(total / 5)
-				console.log(this.page.maxPage);
 					uni.showToast({
 						title: '加载成功',
 						icon: "none"

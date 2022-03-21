@@ -2,7 +2,6 @@
 	<view class="addQuestion" @click="addQuestion">
 		<u-icon name="edit-pen" color="#b1d9f1" size="28"></u-icon>
 		<text>提问</text>
-		
 	</view>
 </template>
 
@@ -18,9 +17,6 @@
 			}
 		},
 		methods: {
-			reply() {
-				
-			},
 			addQuestion() {
 				this.$emit('addQuestion')
 			}

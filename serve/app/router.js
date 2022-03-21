@@ -31,6 +31,7 @@ module.exports = app => {
   router.post('/testSubject/delete', controller.subject.testSubject.delete);
   router.post('/testSubject/delHistory', controller.subject.testSubject.delHistory);
 
+  router.post('/subjectAnswer/typeLists', controller.subject.subjectAnswer.typeLists);
   router.post('/subjectAnswer/list', controller.subject.subjectAnswer.list);
   router.post('/subjectAnswer/add', controller.subject.subjectAnswer.add);
   router.post('/subjectAnswer/update', controller.subject.subjectAnswer.update);

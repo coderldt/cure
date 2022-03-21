@@ -13,7 +13,6 @@
 	import { getHotList } from '../../../apis/home/index.js'
 	export default {
 		props: {
-			startList: Array,
 			search: String,
 			isLogin: Boolean
 		},
@@ -43,15 +42,7 @@
 				const res = await getHotList({ title: this.search, pageNum: this.page.pageNum })
 				if (res.code === 200) {
 					const { data, pageNum, total } = res.data
-					const newList = data.map(i => {
-						if (this.startList.find(startItem => startItem.questionId === i.id)) {
-							i.isStar = true
-						} else {
-							i.isStar = false
-						}
-						i.reply = []
-						return i
-					})
+					const newList = data
 					this.list = this.list.concat(newList)
 					this.page.pageNum = pageNum
 					this.page.total = total

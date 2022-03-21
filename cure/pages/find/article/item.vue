@@ -31,7 +31,7 @@
 				if (!this.isLogin) {
 					return uni.showToast({
 						title: '登录后才可以收藏哦',
-						icon:'error'
+						icon: "none"
 					})
 				}
 				const res = await starArticle({ articleId: this.item.id })
@@ -40,6 +40,7 @@
 				}
 				uni.showToast({
 					title: res.msg,
+					icon: "none"
 				})
 			}
 		}

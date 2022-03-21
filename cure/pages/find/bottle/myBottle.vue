@@ -98,7 +98,8 @@
 				if (res.code === 200) {
 					if (!res.data.length) {
 						uni.showToast({
-							title:'暂无评论内容'
+							title:'暂无评论内容',
+							icon: "none"
 						})
 					} else {
 						item.replyList = res.data
@@ -129,7 +130,7 @@
 				} else {
 					uni.showToast({
 						title:res.msg,
-						icon:'error'
+						icon: "none"
 					})
 				}
 			},
@@ -146,7 +147,7 @@
 				} else {
 					uni.showToast({
 						title:res.msg,
-						icon:'error'
+						icon: "none"
 					})
 				}
 			},

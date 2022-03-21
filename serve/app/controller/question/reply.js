@@ -36,9 +36,20 @@ class ReplyController extends BaseController {
 
     const res = await this.service.multiTableQuery(querytables, [], null, 'question_reply.id');
     if (res.code === 200) {
+      const { id } = this.ctx.userinfo;
+      const resList = await this.replyUserservice.query({ userId: id });
+      res.data.result.forEach(reply => {
+        if (resList.find(i => i.replyId === reply.id)) {
+          reply.checked = true;
+        } else {
+          reply.checked = false;
+        }
+
+        reply.isDel = (reply.rUserId === id);
+      });
+
       const resTree = this.arrayToTree(this.sortTime(res.data.result));
       this.success({ data: resTree });
-      // this.success({ data: res.data });
     } else {
       this.error({ msg: '查询失败' });
     }

@@ -42,7 +42,7 @@
 				if (!this.list.length) {
 					return uni.showToast({
 						title: '请选择一张图片在上传',
-						icon:"error"
+						icon: "none"
 					})
 				}
 				const res = await upload(this.list[0].url)

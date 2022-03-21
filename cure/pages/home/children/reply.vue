@@ -97,14 +97,14 @@
 				const res = await updateReply({ replyId: item.id })
 				uni.showToast({
 					title: res.msg,
-					icon: `${res.code === 200 ? 'none' : 'error' }`
+					icon: `none`
 				})
 			},
 			async onTrash(item, index) {
 				const res = await deleteReply({ id: item.id })
 				uni.showToast({
 					title: res.msg,
-					icon: `${res.code === 200 ? 'none' : 'error' }`
+					icon: "none"
 				})
 				this.replyList.splice(index, 1)
 			},

@@ -59,13 +59,9 @@
 				default: false
 			}
 		},
-		components: {
-			// ReplyList,
-		},
 		data() {
 			return {
 				labels: [],
-				replyStar: [],
 				PROFIX_UPLOAD,
 				id: '',
 				show: false,
@@ -96,7 +92,7 @@
 			}
 		},
 		created() {
-			this.getStoreData(['labels', 'replyStar'])
+			this.getStoreData(['labels'])
 			if (this.isLogin) {
 				const userInfo = uni.getStorageSync('userInfo')
 				if (userInfo) {
@@ -130,33 +126,9 @@
 					}
 					JSON.parse(uni.getStorageSync('userInfo'))
 					const res = await replyList({ questionId: item.id })
-					item.reply = res.data.map(i => {
-						if (i.rUserId === this.id) {
-							i.isDel = true
-						} else {
-							i.isDel = false
-						}
-						if (this.replyStar.find(reply => reply.replyId === i.id)) {
-							i.checked = true
-						} else {
-							i.checked = false
-						}
-						if (i.children) {
-							i.children.forEach(item => {
-								if (item.rUserId === this.id) {
-									item.isDel = true
-								} else {
-									item.isDel = false
-								}
-								if (this.replyStar.find(reply => reply.replyId === item.id)) {
-									item.checked = true
-								} else {
-									item.checked = false
-								}
-							})
-						}
-						return i
-					})
+					if (res.code === 200) {
+						item.reply = res.data
+					}
 				} else {
 					uni.showToast({
 						title: '登录后即可查看评论',

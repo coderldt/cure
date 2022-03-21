@@ -16,7 +16,7 @@
               <el-button type="text" @click="detail(row)"> 列表 </el-button>
               <el-popconfirm confirm-button-text="确认" cancel-button-text="取消" title="确认删除该字典?" @confirm="dele(row.id)">
                 <template #reference>
-                  <el-button type="text" :disabled="row.value === 'subject'"> 删除 </el-button>
+                  <el-button type="text" :disabled="disabeledList.includes(row.value)"> 删除 </el-button>
                 </template>
               </el-popconfirm>
             </template>
@@ -65,6 +65,7 @@ export default defineComponent({
     ChildrenEdit,
   },
   setup() {
+    const disabeledList = ["subject", "labels"];
     const tableColumn: TableColumn[] = [
       { label: "中文名字", prop: "label" },
       { label: "英文值", prop: "value" },
@@ -137,6 +138,7 @@ export default defineComponent({
       }
     };
     return {
+      disabeledList,
       tableColumn,
       isLoading,
       list,

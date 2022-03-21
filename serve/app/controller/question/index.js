@@ -9,7 +9,7 @@ class QuestionController extends BaseController {
   }
 
   async list() {
-    const { title, pageNum = 1 } = this.ctx.request.body;
+    const { title, pageNum = 1, userId } = this.ctx.request.body;
 
     const querytables = [
       {
@@ -42,9 +42,8 @@ class QuestionController extends BaseController {
       const map = {};
 
       if (result.length) {
-        const sql = `select id, questionId from user_similar where questionId in (${result.map(i => `'${i.id}'`).join(',')})`;
+        const sql = `select id, questionId, userId from user_similar where questionId in (${result.map(i => `'${i.id}'`).join(',')})`;
         sqlRes = await this.service.sql(sql);
-
         sqlRes.forEach(i => {
           if (map[i.questionId]) {
             map[i.questionId] += 1;
@@ -53,9 +52,24 @@ class QuestionController extends BaseController {
           }
         });
       }
-      result.forEach(i => {
-        i.count = (map[i.id] || 0);
-      });
+
+      if (userId) {
+        result.forEach(i => {
+          i.count = (map[i.id] || 0);
+          i.reply = [];
+          if (sqlRes.find(item => item.userId === Number(userId) && item.questionId === i.id)) {
+            i.isStar = true;
+          } else {
+            i.isStar = false;
+          }
+        });
+      } else {
+        result.forEach(i => {
+          i.count = (map[i.id] || 0);
+          i.isStar = false;
+          i.reply = [];
+        });
+      }
 
       this.success({ data: { data: result, pageNum, total } });
     } else {
@@ -65,7 +79,7 @@ class QuestionController extends BaseController {
 
   // 查询评论数不准，因为表查询了两次
   async hotList() {
-    const { title, pageNum = 1 } = this.ctx.request.body;
+    const { title, pageNum = 1, userId } = this.ctx.request.body;
 
     const querytables = [
       {
@@ -119,9 +133,26 @@ class QuestionController extends BaseController {
           }
         });
       }
-      result.forEach(i => {
-        i.commentCount = (map[i.id] || 0);
-      });
+
+      const sql = `select id, questionId, userId from user_similar where questionId in (${result.map(i => `'${i.id}'`).join(',')})`;
+      const sqlSimilarRes = await this.service.sql(sql);
+      if (userId) {
+        result.forEach(i => {
+          i.commentCount = (map[i.id] || 0);
+          i.reply = [];
+          if (sqlSimilarRes.find(item => item.userId === Number(userId) && item.questionId === i.id)) {
+            i.isStar = true;
+          } else {
+            i.isStar = false;
+          }
+        });
+      } else {
+        result.forEach(i => {
+          i.commentCount = (map[i.id] || 0);
+          i.isStar = false;
+          i.reply = [];
+        });
+      }
 
       this.success({ data: { data: result, pageNum, total } });
     } else {
@@ -129,7 +160,7 @@ class QuestionController extends BaseController {
     }
   }
 
-  async add() { // 登录
+  async add() {
     const { title, label = [], desc } = this.ctx.request.body;
     if (!title || !desc) {
       return this.error({ msg: '标题或者描述为空' });

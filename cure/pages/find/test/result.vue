@@ -42,7 +42,7 @@
 				} else {
 					uni.showToast({
 						title:res.msg,
-						icon:'error',
+						icon: "none",
 						duration:2500
 					})
 				}

@@ -53,7 +53,7 @@
 						} else {
 							uni.showToast({
 								title:'登录后才可以使用漂流瓶功能',
-								icon:'error'
+								icon: "none"
 							})
 						}
 						break

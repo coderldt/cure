@@ -17,6 +17,10 @@ export function getData(data: Params) {
   return http.post({ url: "/testSubject/list", data });
 }
 
+export function getAnswer(data: any) {
+  return http.post({ url: "/subjectAnalysis/list", data });
+}
+
 export function del(id: number) {
   return http.post({ url: "/testSubject/delete", data: { id } });
 }

@@ -5,6 +5,21 @@ class SubjectAnswerController extends BaseController {
   constructor(ctx) {
     super(ctx);
     this.service = ctx.service.subject.subjectAnswer;
+    this.dictChildrenService = ctx.service.sys.dictChildren;
+  }
+
+  async typeLists() {
+    const { typeId } = this.ctx.request.body;
+
+    const params = {
+      parentId: '5',
+    };
+
+    if (typeId) {
+      params.value = typeId;
+    }
+    const res = await this.dictChildrenService.query(params);
+    this.success({ data: res });
   }
 
   async list() {

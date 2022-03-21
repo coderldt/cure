@@ -17,7 +17,7 @@
     <div class="content">
       <el-row :gutter="20">
         <el-col :span="24">
-          <Table v-loading="isLoading" :column="tableColumn" :list="list" :total="total" @onPaginationChange="onPaginationChange">
+          <Table v-loading="isLoading" :column="tableColumn" :list="list" :is-pagination="false">
             <template #control="{ row }">
               <el-button type="text" @click="analysis(row)"> 解析 </el-button>
             </template>
@@ -37,6 +37,7 @@ import { ElMessage } from "element-plus";
 // import Edit from "./edit.vue";
 import Table, { TableColumn, Pagination } from "@/components/table/index.vue";
 import { getData, del } from "@/apis/questions/bank";
+import { getTypeList } from "@/apis/questions/bankOptions";
 
 interface Form {
   typeId: string;
@@ -44,8 +45,9 @@ interface Form {
 
 export interface List {
   id?: string;
-  title: string;
-  typeId: string;
+  label: string;
+  value: string;
+  parentId: number | string;
 }
 
 interface Page {
@@ -93,7 +95,7 @@ export default defineComponent({
     };
 
     const tableColumn: TableColumn[] = [
-      { label: "类型", prop: "title", width: "", align: "center" },
+      { label: "类型", prop: "label", width: "", align: "center" },
       { label: "操作", align: "center", slot: "control" },
     ];
 
@@ -105,12 +107,12 @@ export default defineComponent({
     const isLoading: Ref<boolean> = ref(false);
     const getList = async () => {
       isLoading.value = true;
-      const res: any = await getData({ ...form, ...page.value });
+      const res: any = await getTypeList({ ...form });
       if (res.code === 200) {
-        list.value = res.data.result;
-        total.value = res.data.total;
-        page.value.pageNum = res.data.pageNum;
-        page.value.pageSize = res.data.pageSize;
+        list.value = res.data;
+        // total.value = res.data.total;
+        // page.value.pageNum = res.data.pageNum;
+        // page.value.pageSize = res.data.pageSize;
       }
       isLoading.value = false;
     };
@@ -137,7 +139,7 @@ export default defineComponent({
 
     const router = useRouter();
     const analysis = (row: List) => {
-      router.push(`/question/analysis/${row.typeId}/${row.title}`);
+      router.push(`/question/analysis/${row.value}/${row.label}`);
     };
 
     return {

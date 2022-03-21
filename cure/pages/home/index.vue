@@ -12,9 +12,9 @@
 			</view>
 		</view>
 		<view class="content">
-			<List v-if="currentTab === 'recommend'" :startList="startList" ref="List" :search="search"
+			<List v-if="currentTab === 'recommend'" ref="List" :search="search" :userId="userId"
 				:isLogin="isLogin"></List>
-			<HotList v-if="currentTab === 'hot'" :startList="startList" ref="HotList" :search="search"
+			<HotList v-if="currentTab === 'hot'" ref="HotList" :search="search" :userId="userId"
 				:isLogin="isLogin"></HotList>
 		</view>
 		<AddQuestion @addQuestion="addQuestion"></AddQuestion>
@@ -76,6 +76,7 @@
 		},
 		data() {
 			return {
+				userId: '',
 				search: "111",
 				tabs: [{
 						label: '推荐',
@@ -130,10 +131,11 @@
 			})
 			this.isLogin = isLogin()
 			if (this.isLogin) {
+				this.userId = uni.getStorageSync('userInfo').id
 				this.getLabel()
-				this.getStarList()
-				this.getReply()
-				this.getReplyStars()
+				// this.getStarList()
+				// this.getReply()
+				// this.getReplyStars()
 				this.currentTab = 'recommend'
 			} else {
 				this.currentTab = 'hot'
@@ -146,9 +148,9 @@
 			...mapMutations(['SAVE_TITLE']),
 			onTabClick(val) {
 				this.currentTab = val
-				if (isLogin()) {
-					this.getStarList()
-				}
+				// if (isLogin()) {
+				// 	this.getStarList()
+				// }
 			},
 			async getLabel() {
 				const res = await getLabels()

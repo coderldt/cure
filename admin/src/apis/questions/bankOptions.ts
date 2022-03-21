@@ -11,6 +11,14 @@ export interface Subject {
   subjectId: number | string;
 }
 
+export interface TypeList {
+  typeId?: string;
+}
+
+export function getTypeList(data: TypeList) {
+  return http.post({ url: "/subjectAnswer/typeLists", data });
+}
+
 export function getData(data: Params) {
   return http.post({ url: "/subjectAnswer/list", data });
 }
