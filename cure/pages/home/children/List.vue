@@ -16,7 +16,10 @@
 			labelList: Array,
 			search: String,
 			isLogin: Boolean,
-			userId: String
+			userId: {
+				type: String,
+				default: ''
+			}
 		},
 		components: {
 			Item,
@@ -51,7 +54,7 @@
 			},
 			async get() {
 				this.isloading = true
-				const res = await getList({ title: this.search, pageNum: this.page.pageNum, userId })
+				const res = await getList({ title: this.search, pageNum: this.page.pageNum, userId: this.userId })
 				if (res.code === 200) {
 					const { data, pageNum, total } = res.data
 					const newList = data

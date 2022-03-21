@@ -1,22 +1,24 @@
 <template>
 	<view class="testResult">
-		<view class="title">
-			测试最终结果
-		</view>
-		<view class="form">
-			<view class="formItem">
-				<view class="label">
-					最终分数：
-				</view>
-				<view class="value">
-					{{msg.score}}
-				</view>
-			</view><view class="formItem">
-				<view class="label">
-					分数解析：
-				</view>
-				<view class="value">
-					{{msg.result}}
+		<view class="content">
+			<view class="title">
+				测试最终结果
+			</view>
+			<view class="form">
+				<view class="formItem">
+					<view class="label">
+						最终分数：
+					</view>
+					<view class="value">
+						{{msg.score}}
+					</view>
+				</view><view class="formItem">
+					<view class="label">
+						分数解析：
+					</view>
+					<view class="value">
+						{{msg.result}}
+					</view>
 				</view>
 			</view>
 		</view>
@@ -54,10 +56,17 @@
 
 <style lang="scss" scoped>
 	.testResult {
-		min-height: 100vh;
-		background: #eae2d1;
+		min-height: calc(100vh - 66rpx);
+		background: #f8f7fc;
 		padding: 30rpx;
-		>.title {
+		
+		.content {
+			padding: 30rpx;
+			border-radius: 10rpx;
+			background-color: #FFFFFF;
+		}
+		
+		.title {
 			font-weight: 700;
 			font-size: 30rpx;
 			margin-bottom: 30rpx;
@@ -76,6 +85,9 @@
 					flex: 1;
 					color: #626262;
 				}
+			}
+			.formItem:nth-child(2) {
+				margin-bottom: 0;
 			}
 		}
 	}

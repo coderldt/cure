@@ -14,7 +14,11 @@
 	export default {
 		props: {
 			search: String,
-			isLogin: Boolean
+			isLogin: Boolean,
+			userId: {
+				type: String,
+				default: ''
+			}
 		},
 		components: {
 			Item,
@@ -39,7 +43,7 @@
 		methods: {
 			async getList() {
 				this.isloading = true
-				const res = await getHotList({ title: this.search, pageNum: this.page.pageNum })
+				const res = await getHotList({ title: this.search, pageNum: this.page.pageNum, userId: this.userId })
 				if (res.code === 200) {
 					const { data, pageNum, total } = res.data
 					const newList = data

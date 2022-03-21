@@ -5,10 +5,10 @@
 		</view>
 		<view class="types">
 			<u-row gutter="10" customStyle="margin-bottom: 10px" v-for="(item, index) in getSliceList" :key="index">
-				<u-col span="6" class="typesItem">
+				<u-col span="6" class="typesItem" v-if="item[0]">
 					<u-button type="primary" :plain="currentType !== item[0].value" @click="currentType = item[0].value">{{ item[0].label }}</u-button>
 				</u-col>
-				<u-col span="6" class="typesItem">
+				<u-col span="6" class="typesItem" v-if="item[1]">
 					<u-button type="primary" :plain="currentType !== item[1].value" @click="currentType = item[1].value">{{ item[1].label }}</u-button>
 				</u-col>
 			</u-row>
@@ -37,8 +37,9 @@
 			getSliceList() {
 				const arr = [];
 				for (let i = 0; i < this.typeList.length; i += 2) {
-					arr.push(this.typeList.slice(i, i + 2));
+					arr.push(this.typeList.slice(i, i + 2).filter(i => i.value));
 				}
+				console.log(arr);
 				return arr
 			}
 		},
@@ -67,8 +68,8 @@
 
 <style lang="scss" scoped>
 	.test {
-		min-height: 100vh;
-		background: #eae2d1;
+		min-height: calc(100vh - 66rpx);
+		background: #f8f7fc;
 		padding: 30rpx 30rpx 0;
 
 		.title {

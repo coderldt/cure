@@ -131,7 +131,9 @@
 			})
 			this.isLogin = isLogin()
 			if (this.isLogin) {
-				this.userId = uni.getStorageSync('userInfo').id
+				const userinfo = uni.getStorageSync('userInfo')
+				if (userinfo)
+				this.userId = String(JSON.parse(userinfo).id)
 				this.getLabel()
 				// this.getStarList()
 				// this.getReply()

@@ -25,21 +25,21 @@
 			"path":"pages/find/test/index",
 			"style": {
 				"navigationBarTitleText": "测试分类",
-				"navigationBarBackgroundColor":"#eae2d1"
+				"navigationBarBackgroundColor":"#f8f7fc"
 			}
 		},
 		{
 			"path":"pages/find/test/subject",
 			"style": {
 				"navigationBarTitleText": "测试题",
-				"navigationBarBackgroundColor":"#eae2d1"
+				"navigationBarBackgroundColor":"#f8f7fc"
 			}
 		},
 		{
 			"path":"pages/find/test/result",
 			"style": {
 				"navigationBarTitleText": "测试结果",
-				"navigationBarBackgroundColor":"#eae2d1"
+				"navigationBarBackgroundColor":"#f8f7fc"
 			}
 		},
 		{

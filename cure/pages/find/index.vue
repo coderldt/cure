@@ -22,7 +22,7 @@
 				list: [
 					{ type: 'test', title: '测测你的焦虑类型', desc: '心里测试，测你的焦虑程度', btn: '开始测试', btnColor: "#f09a2b", bgc: "#2d8b9e" },
 					{ type: 'article', title: '推送文章', desc: '每日推送优质文章，供你参考', btn: '开始查看', btnColor: "#8858f8", bgc: "#01042a" },
-					{ type: 'bottle', title: '遇见漂流瓶', desc: '想你所想，懂你所需', btn: '进入', btnColor: "#18b1d1", bgc: "#93e4ff" },
+					{ type: 'bottle', title: '遇见漂流瓶', desc: '想你所想，懂你所需', btn: '进入漂流', btnColor: "#18b1d1", bgc: "#93e4ff" },
 				],
 				isLogin: false
 			}
