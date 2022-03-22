@@ -10,6 +10,7 @@ export interface Article {
   id?: number | string;
   title?: string;
   content?: string;
+  image?: string;
 }
 
 export function getData(data: Params) {

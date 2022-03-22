@@ -39,3 +39,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+.el-overlay {
+  z-index: 1000 !important;
+}
+</style>

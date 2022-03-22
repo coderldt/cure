@@ -4,6 +4,14 @@
       <el-form-item label="文章标题" prop="title">
         <el-input v-model="form.title" placeholder="请输入" />
       </el-form-item>
+      <el-form-item label="缩略图" prop="picture">
+        <el-upload ref="uploadRef" :file-list="fileList" class="upload-demo" action="http://127.0.0.1:8000/cureApi/upload" :auto-upload="false" :on-success="onUpload" :on-handle-remove="onRemove">
+          <template #trigger>
+            <el-button type="primary">选择文件</el-button>
+          </template>
+          <el-button class="ml-3" type="success" @click="submitUpload"> 上传 </el-button>
+        </el-upload>
+      </el-form-item>
       <el-form-item label="文章内容" prop="content">
         <Tinymce ref="editor" :content="form.content" @change="noticeContentChange" />
       </el-form-item>
@@ -21,6 +29,7 @@
 import { computed, defineComponent, onMounted, reactive, ref, Ref, toRefs, watch } from "vue";
 import { add, update, Article } from "@/apis/sys/article";
 import Tinymce from "@/components/Tinymce/index.vue";
+import type { ElUpload } from "element-plus";
 import { ElMessage } from "element-plus";
 export default defineComponent({
   components: {
@@ -51,7 +60,9 @@ export default defineComponent({
     watch(isOpen, (val) => {
       if (val) {
         form.value = data.value;
-        console.log(form.value);
+        if (data.value.title && data.value.content) {
+          fileList.value = [{ url: data.value.image, name: data.value.title }];
+        }
       }
     });
 
@@ -59,6 +70,7 @@ export default defineComponent({
       id: "",
       title: "",
       content: "",
+      image: "",
     });
     const rules = reactive({
       title: [{ required: true, message: "标题不可为空", trigger: "blur" }],
@@ -83,11 +95,26 @@ export default defineComponent({
       if (res.code === 200) {
         ElMessage.success("操作成功");
         emit("frensh");
+        fileList.value = [];
         isOpen.value = false;
       } else {
         ElMessage.error("操作失败");
       }
       isLoading.value = false;
+    };
+
+    const fileList = ref<any[]>([]);
+    const uploadRef = ref<InstanceType<typeof ElUpload>>();
+    const submitUpload = () => {
+      uploadRef.value!.submit();
+    };
+    const onUpload = (e: any) => {
+      if (e.code === 200) {
+        form.value.image = e.data;
+      }
+    };
+    const onRemove = (file: any, fileList: any[]) => {
+      console.log(file, fileList);
     };
 
     return {
@@ -98,9 +125,18 @@ export default defineComponent({
       rules,
       submit,
       noticeContentChange,
+      uploadRef,
+      fileList,
+      submitUpload,
+      onUpload,
+      onRemove,
     };
   },
 });
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less">
+.el-overlay {
+  z-index: 1000;
+}
+</style>
