@@ -22,7 +22,7 @@
 				isloading: false
 			}
 		},
-		onLoad() {
+		onShow() {
 			this.getArticle()
 		},
 		methods: {
@@ -40,12 +40,16 @@
 
 <style scoped lang="scss">
 	.star {
-		padding: 24rpx;
+		// padding: 24rpx;
 		min-height: calc(100vh - 90rpx);
-		background-color: #f8f8f8;
+		background-color: #fff;
 		
-		.listItem {
-			margin-bottom: 20rpx;
+		.list {
+			border-top: 4rpx solid #f0f0f0;
 		}
+		
+		// .listItem {
+		// 	margin-bottom: 20rpx;
+		// }
 	}
 </style>

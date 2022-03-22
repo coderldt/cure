@@ -135,12 +135,10 @@
 				if (userinfo)
 				this.userId = String(JSON.parse(userinfo).id)
 				this.getLabel()
-				// this.getStarList()
-				// this.getReply()
-				// this.getReplyStars()
 				this.currentTab = 'recommend'
 			} else {
 				this.currentTab = 'hot'
+				this.userId = ''
 			}
 		},
 		computed: {
@@ -192,7 +190,7 @@
 				if (!this.isLogin) {
 					return uni.showToast({
 						title: '登录后才可以发起提问',
-						icon:"error"
+						icon:"none"
 					})
 				}
 				this.replyPopup = {
@@ -203,6 +201,12 @@
 				this.show = true
 			},
 			async submit() {
+				if (!this.isLogin) {
+					return uni.showToast({
+						title: '登录后才可以发起提问',
+						icon:"none"
+					})
+				}
 				const vali = await this.$refs.form1.validate()
 				if (vali) {
 					const res = await questionAdd(this.replyPopup)

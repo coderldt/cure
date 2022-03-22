@@ -1,18 +1,25 @@
 <template>
 	<view class="articleItem">
-		<view class="title" @click="detail">
-			{{item.title}}
+		<view class="image" @click="detail">
+			<u--image :src="PROFIX_UPLOAD + item.image" width="220rpx" height="200rpx" mode="aspectFill" ></u--image>
 		</view>
-		<view class="desc" v-html="item.content"  @click="detail">
-		</view>
-		<view class="control">
-			<u-icon :name="item.star ? 'star-fill' : 'star'" :color="item.star ? 'red' : ''" @click="onStar" size="28"></u-icon>
+		<view class="content">
+			<view class="title" @click="detail">
+				{{item.title}}
+			</view>
+			<view class="desc u-line-2" v-html="item.content"  @click="detail">
+			</view>
+			<view class="control">
+				<text class="time">{{ item.createTime }}</text>
+				<u-icon :name="item.star ? 'star-fill' : 'star'" :color="item.star ? 'red' : ''" @click="onStar" size="22"></u-icon>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
 	import { starArticle } from '../../../apis/article/index.js'
+	import { PROFIX_UPLOAD } from '../../../config/index.js'
 	export default {
 		props: {
 			item: {
@@ -20,6 +27,11 @@
 				default: () => ({})
 			},
 			isLogin: Boolean
+		},
+		data() {
+			return {
+				PROFIX_UPLOAD
+			}
 		},
 		methods: {
 			async detail() {
@@ -49,24 +61,42 @@
 
 <style scoped lang="scss">
 .articleItem {
-	padding: 20rpx;
+	display: flex;
+	padding: 24rpx;
 	border-radius: 20rpx;
 	background: #FFFFFF;
 	overflow: hidden;
 	
-	.title {
-		font-weight: 700;
-		font-size: 36rpx;
-		margin-bottom: 20rpx;
+	.image {
+		padding-right: 24rpx;
 	}
 	
-	.desc {
-		max-height: 250rpx;
-		overflow: hidden;
-	}
-	
-	.control {
-		float: right;
+	.content {
+		flex: 1;
+		.title {
+			font-weight: 700;
+			font-size: 36rpx;
+			margin-bottom: 20rpx;
+			color: #515151;
+		}
+		
+		.desc {
+			font-weight: 30rpx;
+			color: #9a9a9a;
+			max-height: 250rpx;
+			overflow: hidden;
+		}
+		
+		.control {
+			display: flex;
+			align-items: center;
+			
+			.time {
+				font-size: 24rpx;
+				color: #939393;
+				flex: 1;
+			}
+		}
 	}
 }
 </style>

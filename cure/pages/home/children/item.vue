@@ -137,12 +137,19 @@
 				}
 			},
 			onReply(item) {
-				this.replyPopup.content = ''
-				this.replyPopup.replyId = ''
-				this.replyPopup.questionId = item.id
-				this.replyPlaceholder = `回复：${item.title}`
-				this.replyItem = item
-				this.show = true 
+				if (this.isLogin) {
+					this.replyPopup.content = ''
+					this.replyPopup.replyId = ''
+					this.replyPopup.questionId = item.id
+					this.replyPlaceholder = `回复：${item.title}`
+					this.replyItem = item
+					this.show = true 
+				} else {
+					uni.showToast({
+						title: '登录后即可查看评论',
+						icon:"none"
+					})
+				}
 			},
 			async reply() {
 				const res = await addReply(this.replyPopup)

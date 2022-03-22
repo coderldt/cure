@@ -39,7 +39,6 @@
 				for (let i = 0; i < this.typeList.length; i += 2) {
 					arr.push(this.typeList.slice(i, i + 2).filter(i => i.value));
 				}
-				console.log(arr);
 				return arr
 			}
 		},

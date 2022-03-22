@@ -40,13 +40,18 @@
 				},
 				starArticle: [],
 				isloading: false,
-				isLogin: false
+				isLogin: false,
+				userId: ''
 			}
 		},
-		onLoad() {
+		onShow() {
+			this.list = []
+			this.page.pageNum = 1
 			this.isLogin = isLogin()
 			if (this.isLogin) {
-				this.getStarArt()
+				const userinfo = uni.getStorageSync('userInfo')
+				if (userinfo)
+				this.userId = String(JSON.parse(userinfo).id)
 			}
 			this.getTest()
 		},
@@ -58,7 +63,7 @@
 			},
 			async getTest() {
 				this.isloading = true
-				const res = await getArticleList({ ...this.page, title: this.search })
+				const res = await getArticleList({ ...this.page, title: this.search, userId: this.userId })
 				if (res.code === 200) {
 					const { total, pageNum, pageSize, result } = res.data
 					this.total = total
@@ -66,14 +71,7 @@
 						pageNum: pageNum,
 						pageSize
 					}
-					let newList = result.map(i => {
-						if(this.starArticle.find(item => item.articleId === i.id)) {
-							i.star = true
-						} else {
-							i.star = false
-						}
-						return i
-					})
+					let newList = result
 					this.list = this.list.concat(newList)
 					this.maxPage = Math.ceil(total / 5)
 					uni.showToast({

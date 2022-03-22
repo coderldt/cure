@@ -9,7 +9,7 @@ class ArticleController extends BaseController {
   }
 
   async list() {
-    const { title, pageNum, pageSize } = this.ctx.request.body;
+    const { title, pageNum, pageSize, userId } = this.ctx.request.body;
     const querytables = [
       {
         table: 'article',
@@ -21,8 +21,27 @@ class ArticleController extends BaseController {
       querytables[0].vagueCon.title = title;
     }
     const res = await this.service.multiTableQuery(querytables, [], { pageNum, pageSize });
+
+    let result = null;
+    if (userId) {
+      const userArticle = await this.userArticleservice.query({ userId });
+      result = res.data.result.map(item => {
+        if (userArticle.find(i => i.articleId === item.id)) {
+          item.star = true;
+        } else {
+          item.star = false;
+        }
+        return item;
+      });
+    } else {
+      result = res.data.result.map(i => {
+        i.star = false;
+        return i;
+      });
+    }
+
     if (res.code === 200) {
-      this.success({ data: res.data });
+      this.success({ data: { ...res.data, result } });
     } else {
       this.error({ msg: '查询失败' });
     }
@@ -106,7 +125,7 @@ class ArticleController extends BaseController {
       },
       {
         table: 'article',
-        keys: [ 'title', 'id as articleId' ],
+        keys: [ 'title', 'id as articleId', 'content', 'createTime', 'image' ],
         leftJoinCon: [ 'article.id = user_article.articleId' ],
       },
     ];
@@ -119,25 +138,24 @@ class ArticleController extends BaseController {
   }
 
   async detail() {
-    const { articleId } = this.ctx.request.body;
+    const { articleId, userId } = this.ctx.request.body;
     if (!articleId) {
       return this.error({ data: '请选择一个文章' });
     }
 
     const res = await this.service.query({ id: articleId });
     if (res.length) {
+      if (userId) {
+        const userArticle = await this.userArticleservice.query({ articleId, userId });
+        res[0].star = !!userArticle.length;
+      } else {
+        res[0].star = false;
+      }
       this.success({ data: res[0] });
     } else {
       this.error({ msg: '文章找不到了' });
     }
   }
-  // async myArticle() {
-  //   const { id } = this.ctx.userinfo;
-  //   console.log(id);
-  //   const res = await this.service.query({ userId: id });
-  //   console.log(res);
-  //   this.success({ data: res });
-  // }
 }
 
 module.exports = ArticleController;

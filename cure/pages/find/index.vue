@@ -30,15 +30,24 @@
 		onShow() {
 			if (isLogin()) {
 				this.isLogin = true
+			} else {
+				this.isLogin = false
 			}
 		},
 		methods: {
 			onItemClick(item) {
 				switch (item.type) {
 					case 'test':
-						uni.navigateTo({
-							url:'/pages/find/test/index'
-						})
+						if (this.isLogin) {
+							uni.navigateTo({
+								url:'/pages/find/test/index'
+							})
+						} else {
+							uni.showToast({
+								title:'登录后才可以使用测试功能',
+								icon: "none"
+							})
+						}
 						break
 					case 'article':
 						uni.navigateTo({
@@ -65,11 +74,11 @@
 
 <style lang="scss" scoped>
 	.find {
-		margin: 30rpx;
+		margin: 34rpx;
 		.item {
 			padding: 40rpx;
 			border-radius: 20rpx;
-			margin-bottom: 20rpx;
+			margin-bottom: 34rpx;
 			color: #fff;
 			
 			.title {

@@ -33,3 +33,7 @@ export function getMyTest() {
 export function delMyHistory(data) {
 	return axios.post({ url: '/testSubject/delHistory', data })
 }
+
+export function getMyReply() {
+	return axios.post({ url: '/user/myReply' })
+}
