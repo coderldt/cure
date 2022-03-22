@@ -1,5 +1,6 @@
 'use strict';
 const BaseController = require('../base');
+const dayjs = require('dayjs');
 
 class ArticleController extends BaseController {
   constructor(ctx) {
@@ -30,12 +31,20 @@ class ArticleController extends BaseController {
 
   async add() { // 登录
     const { ctx } = this;
-    const { title, content } = ctx.request.body;
+    const { title, content, image } = ctx.request.body;
     if (!title || !content) {
       return this.error({ data: '标题和内容不能为空' });
     }
 
-    const res = await this.service.add({ title, content });
+    const time = dayjs().format('YYYY-MM-DD HH:mm:ss');
+    const params = {
+      title,
+      content,
+      image,
+      createTime: time,
+    };
+
+    const res = await this.service.add(params);
     if (res.code === 200) {
       this.success({ data: res.data, msg: '添加成功' });
     } else {
@@ -44,12 +53,12 @@ class ArticleController extends BaseController {
   }
 
   async update() {
-    const { title, content, id } = this.ctx.request.body;
+    const { title, content, id, image } = this.ctx.request.body;
     if (!title || !content || !id) {
       return this.error({ data: '标题和内容不能为空' });
     }
 
-    const res = await this.service.update({ title, content, id });
+    const res = await this.service.update({ title, content, id, image });
     if (res.code === 200) {
       this.success({ data: res.data, msg: '修改成功' });
     } else {
@@ -112,7 +121,7 @@ class ArticleController extends BaseController {
     ];
     const res = await this.service.multiTableQuery(querytables, [], null);
     if (res.code === 200) {
-      this.success({ data: res.data });
+      this.success({ data: res.data.filter(i => !i.articleId) });
     } else {
       this.error({ msg: '查询失败' });
     }

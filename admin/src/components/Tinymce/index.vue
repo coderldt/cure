@@ -48,9 +48,9 @@ export default defineComponent({
       width: editorData.value.width,
       menubar: false,
       plugins: ["advlist autolink lists link image charmap print preview anchor", "searchreplace visualblocks code fullscreen", "insertdatetime media table paste code help wordcount"],
-      toolbar: `undo redo | formatselect | bold italic backcolor |
-           alignleft aligncenter alignright alignjustify |
-           bullist numlist outdent indent | removeformat | help`,
+      toolbar: `code undo redo | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify  | \
+                    formatselect fontselect fontsizeselect | bullist numlist | outdent indent blockquote subscript superscript removeformat | \
+                    table image media emoticons charmap hr pagebreak insertdatetime | fullscreen `,
       branding: false,
       fontsize_formats: "12px 14px 16px 18px 24px 36px 48px 56px 72px",
       font_formats:
