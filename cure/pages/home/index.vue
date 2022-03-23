@@ -57,8 +57,6 @@
 		getLabels
 	} from '../../apis/sys.js'
 	import {
-		starList,
-		getMyReply,
 		questionAdd
 	} from '../../apis/home/index.js'
 	import {
@@ -77,7 +75,7 @@
 		data() {
 			return {
 				userId: '',
-				search: "111",
+				search: "",
 				tabs: [{
 						label: '推荐',
 						value: 'recommend'
@@ -88,7 +86,6 @@
 					},
 				],
 				currentTab: "recommend",
-				startList: [],
 				labelList: [],
 				isLogin: false,
 				show: false,
@@ -122,7 +119,6 @@
 		},
 		onShow() {
 			this.search = this.title
-			this.startList = []
 			this.$nextTick(function(){
 				if (this.title) {
 					this.onSearch()
@@ -148,35 +144,12 @@
 			...mapMutations(['SAVE_TITLE']),
 			onTabClick(val) {
 				this.currentTab = val
-				// if (isLogin()) {
-				// 	this.getStarList()
-				// }
 			},
 			async getLabel() {
 				const res = await getLabels()
 				if (res.code === 200) {
 					this.labelList = res.data
 					uni.setStorageSync("labels", JSON.stringify(res.data))
-				}
-			},
-			async getStarList() {
-				const res = await starList()
-				if (res.code === 200) {
-					this.startList = res.data
-					console.log(this.startList);
-					uni.setStorageSync("stats", JSON.stringify(res.data))
-				}
-			},
-			async getReply() {
-				const res = await getMyReply()
-				if (res.code === 200) {
-					uni.setStorageSync("reply", JSON.stringify(res.data.result))
-				}
-			},
-			async getReplyStars() {
-				const res = await getReplyStar()
-				if (res.code === 200) {
-					uni.setStorageSync("replyStar", JSON.stringify(res.data))
 				}
 			},
 			onSearch() {
