@@ -37,6 +37,9 @@ module.exports = appInfo => {
   // add your user config here
   const userConfig = {
     uploadAvatarDir: 'app/public/upload',
+    avatarAssetsType: [ '.png', '.jpeg', '.jpg' ],
+    uploadAudioDir: 'app/public/audio',
+    audioAssetsType: [ '.mp3' ],
     assets: {
       publicPath: '/unionPublic/',
     },
@@ -73,6 +76,13 @@ module.exports = appInfo => {
 
   config.multipart = {
     mode: 'file',
+    whitelist: [
+      '.jpg',
+      '.jpeg',
+      '.png',
+      '.mp3',
+    ],
+    fileSize: '50mb',
   };
 
   config.cluster = {

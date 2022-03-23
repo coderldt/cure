@@ -30,5 +30,8 @@ module.exports = {
     '/cureApi/bottle/reply',
     '/cureApi/bottle/delete',
     '/cureApi/bottle/addMyBottle',
+
+    '/cureApi/audio/star',
+    '/cureApi/audio/getMyStarAudio',
   ],
 };

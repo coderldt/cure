@@ -30,20 +30,60 @@ class UploadController extends BaseController {
 
   async upload() { // 填写信息
     const { ctx, config } = this;
+
+    if (!ctx.request.files) {
+      return this.error({ msg: '请选择一个文件' });
+    }
+    const file = ctx.request.files[0];
+    const fileName = file.filename;
+
+    if (config.avatarAssetsType.some(i => fileName.includes(i))) {
+      const res = await this.storageData(config.uploadAvatarDir, file);
+      if (res && res.code === 200) {
+        this.success({ data: res.data });
+      } else {
+        this.error({ msg: '上传出错' });
+      }
+    } else {
+      this.error({ msg: `只支持${config.avatarAssetsType.join(',')}类型` });
+    }
+  }
+
+  async uploadAudio() { // 填写信息
+    const { ctx, config } = this;
+
+    if (!ctx.request.files) {
+      return this.error({ msg: '请选择一个文件' });
+    }
+    const file = ctx.request.files[0];
+    const fileName = file.filename;
+
+    if (config.audioAssetsType.some(i => fileName.includes(i))) {
+      const res = await this.storageData(config.uploadAudioDir, file);
+      if (res && res.code === 200) {
+        this.success({ data: res.data });
+      } else {
+        this.error({ msg: '上传出错' });
+      }
+    } else {
+      this.error({ msg: `只支持${config.audioAssetsType.join(',')}类型` });
+    }
+  }
+
+  async storageData(uploadDir, file) {
+    const { ctx } = this;
     try {
-      // 0、获取文件
-      const file = ctx.request.files[0];
-      const fileData = fs.readFileSync(file.filepath);
       // 生成日期
+      const fileData = fs.readFileSync(file.filepath);
       const day = dayjs(new Date()).format('YYYY-MM-DD');
-      const dir = path.join(config.uploadAvatarDir, day);
+      const dir = path.join(uploadDir, day);
 
       // 去重（检测当天上传重复图片）
       const res = this.duplicateDetection(dir, md5(fileData));
       let imgPath = '';
       if (res) {
         imgPath = res.replace(/\\/g, '/').replace('app', '').replace('/public', '/curePublic');
-        this.success({ data: res });
+        // this.success({ data: res });
       } else {
         // 创建目录，并写入
         await mkdirp(dir);
@@ -52,9 +92,10 @@ class UploadController extends BaseController {
         fs.writeFileSync(tempDir, fileData);
         imgPath = tempDir.replace(/\\/g, '/').replace('app', '').replace('/public', '/curePublic');
       }
-      this.success({ data: imgPath });
+      return { code: 200, data: imgPath };
     } catch (error) {
-      this.error({ msg: '上传失败' });
+      console.log(error);
+      return { code: 500 };
     } finally {
       // 6、清除临时文件
       ctx.cleanupRequestFiles();

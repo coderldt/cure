@@ -139,8 +139,9 @@ class ArticleController extends BaseController {
       },
     ];
     const res = await this.service.multiTableQuery(querytables, [], null);
+    const result = res.data.result.filter(i => i.articleId);
     if (res.code === 200) {
-      this.success({ data: res.data.filter(i => !i.articleId) });
+      this.success({ data: { ...res.data, result } });
     } else {
       this.error({ msg: '查询失败' });
     }

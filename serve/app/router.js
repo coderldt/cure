@@ -43,6 +43,7 @@ module.exports = app => {
   router.post('/subjectAnalysis/delete', controller.subject.subjectAnalysis.delete);
 
   router.post('/upload', controller.tools.upload.upload);
+  router.post('/uploadAudio', controller.tools.upload.uploadAudio);
 
   // APP
   router.post('/question/list', controller.question.index.list);
@@ -82,12 +83,19 @@ module.exports = app => {
   // 获取我的点赞评论表
   router.post('/user/getReplyStar', controller.question.reply.getMyReply);
 
-
   // 随机出题
   router.post('/subject/randomTest', controller.subject.testSubject.randomTest);
   router.post('/subject/testResult', controller.subject.testSubject.testResult);
   router.post('/subject/testHistory', controller.subject.testSubject.testHistory);
 
+  // 音频
+  router.post('/audio/getMyStarAudio', controller.audio.index.getMyStarAudio);
+  router.post('/audio/list', controller.audio.index.getList);
+  router.post('/audio/add', controller.audio.index.add);
+  router.post('/audio/update', controller.audio.index.update);
+  router.post('/audio/delete', controller.audio.index.delete);
+  router.post('/audio/detail', controller.audio.index.detail);
+  router.post('/audio/star', controller.audio.index.star);
 };
 
 
