@@ -2,6 +2,14 @@
 	<view class="myQuestion">
 		<view class="content">
 			<QuestionItem class="questionItem" v-for="(item, index) in questions" :key="index" :item="item"></QuestionItem>
+			<u-empty
+				class="empty"
+				mode="data"
+				icon="http://cdn.uviewui.com/uview/empty/car.png"
+				text="暂无数据"
+				v-if="!questions.length"
+			>
+			</u-empty>
 		</view>
 	</view>
 </template>

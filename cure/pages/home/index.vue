@@ -109,7 +109,7 @@
 					},
 					label: {
 						type: 'array',
-						max: 2,
+						max: 3,
 						required: true,
 						message: '标签最多能选三个',
 						trigger: ['change']
@@ -124,6 +124,7 @@
 					this.onSearch()
 				}
 				this.SAVE_TITLE('')
+				// this.search = ''
 			})
 			this.isLogin = isLogin()
 			if (this.isLogin) {

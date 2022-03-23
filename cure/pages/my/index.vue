@@ -84,6 +84,9 @@
 						})
 						break
 					case 'editPen':
+						uni.navigateTo({
+							url:'/pages/my/children/reply'
+						})
 						break
 					case 'star':
 						uni.navigateTo({

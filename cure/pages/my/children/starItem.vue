@@ -4,7 +4,10 @@
 			<view class="title">
 				{{item.title}}
 			</view>
-			<view class="desc u-line-2" v-html="item.content" >
+			<view class="desc"  >
+				<view class="" v-html="item.content">
+					
+				</view>
 			</view>
 			<view class="control">
 				<text class="time">{{ item.createTime }}</text>
@@ -64,6 +67,11 @@
 				color: #9a9a9a;
 				max-height: 250rpx;
 				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				
 			}
 			
 			.control {

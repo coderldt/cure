@@ -4,6 +4,14 @@
 			<StarItem class="listItem" v-for="(item, index) in list" :key="index" :item="item"></StarItem>
 		</view>
 		<Loading v-if="isloading" :isloading="isloading"></Loading>
+		<u-empty
+			class="empty"
+			mode="data"
+			icon="http://cdn.uviewui.com/uview/empty/car.png"
+			text="暂无数据"
+			v-if="!list.length"
+		>
+		</u-empty>
 	</view>
 </template>
 

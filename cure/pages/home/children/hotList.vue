@@ -3,6 +3,14 @@
 		<view class="hotList">
 			<Item class="item" v-for="(item, index) in list" :key="index" :item="item" :isLogin="isLogin"></Item>
 			<Loading v-if="isloading" :isloading="isloading"></Loading>
+			<u-empty
+				class="empty"
+				mode="data"
+				icon="http://cdn.uviewui.com/uview/empty/car.png"
+				text="暂无数据"
+				v-if="!list.length"
+			>
+			</u-empty>
 		</view>
 	</scroll-view>
 </template>

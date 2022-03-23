@@ -144,8 +144,14 @@ class ReplyController extends BaseController {
         keys: [ 'username', 'avatar' ],
         leftJoinCon: [ 'questions.userId = sys_user.id' ],
       },
+      {
+        table: 'user_reply',
+        keys: [ ],
+        totalKeys: [ 'count(user_reply.id) as countReply' ],
+        leftJoinCon: [ 'user_reply.replyId = question_reply.id' ],
+      },
     ];
-    const res = await this.service.multiTableQuery(querytables, [], null);
+    const res = await this.service.multiTableQuery(querytables, [], null, 'question_reply.id');
     if (res.code === 200) {
       this.success({ data: res.data });
     } else {

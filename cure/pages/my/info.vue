@@ -28,7 +28,7 @@
 		    </u-collapse-item>
 		  </u-collapse>
 		  <view class="submitBtn">
-			<u-button type="primary" @click="submit">提交</u-button>
+			<u-button type="primary" :loading="isLoading" @click="submit">提交</u-button>
 		  </view>
 	</view>
 </template>
@@ -46,6 +46,7 @@
 					username: '',
 					autograph: ''
 				},
+				isLoading: false,
 				defaultImg: ""
 			}
 		},
@@ -56,7 +57,14 @@
 			getDetail() {
 				const userinfo = uni.getStorageSync('userInfo')
 				if (userinfo) {
-					this.userInfo = JSON.parse(userinfo)
+					const { username, autograph, id } = JSON.parse(userinfo)
+					if (username) {
+						this.userInfo.username = (username || '')
+					}
+					if (autograph) {
+						this.userInfo.autograph = (autograph || '')
+					}
+					this.userInfo.id = id
 					this.defaultImg = this.userInfo.avatar
 				}
 			},
@@ -64,6 +72,7 @@
 				this.userInfo.avatar = val
 			},
 			async submit() {
+				this.isLoading = true
 				const res = await update(this.userInfo)
 				if (res.code === 200) {
 					console.log(this.userInfo);
@@ -74,6 +83,7 @@
 							uni.navigateBack({
 								delta:1
 							})
+							
 						}
 					})
 				} else {
@@ -82,6 +92,7 @@
 						icon:'error'
 					})
 				}
+				this.isLoading = false
 			}
 		}
 	}
