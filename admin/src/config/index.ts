@@ -59,6 +59,12 @@ const menu: Array<Menu> = [
         path: "/system/article",
         id: "3-3",
       },
+      {
+        title: "音频管理",
+        icon: "",
+        path: "/system/audio",
+        id: "3-4",
+      },
     ],
   },
 ];

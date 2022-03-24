@@ -37,7 +37,7 @@ async function connectSSh() {
     });
 }
 async function runTask() {
-  await compileDist(); // 打包完成
+  // await compileDist(); // 打包完成
   await connectSSh(); // 提交上传
 }
 runTask();

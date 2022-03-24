@@ -35,6 +35,10 @@
 			<text class="comment"  @click="onCommentChange(item)" :style="{ color: `${ item.commentCount ? '#b1d6eb' : '#eaeaea' }` }">查看评论</text>
 			<text class="replying" @click="onReply(item)">回复评论</text>
 			<ReplyList class="reply" v-if="item.reply && item.reply.length" :replyList="item.reply" @frensh="frensh"></ReplyList>
+			<view class="close" @click="onClose(item)" v-if="item.reply && item.reply.length">
+				<u-icon name="arrow-up" color="#b1d6eb"></u-icon> 
+				<text>收起</text>
+			</view>
 		</view>
 		<u-popup :show="show" @close="show = false">
 			<view class="replyPopop">
@@ -170,6 +174,9 @@
 			frensh() {
 				this.onCommentChange(this.item)
 			},
+			onClose(item) {
+				item.reply = []
+			},
 			getStoreData(types) {
 				types.forEach(type => {
 					const data = uni.getStorageSync(type)
@@ -273,6 +280,17 @@
 			
 			.replying {
 				margin-left: 30rpx;
+			}
+			
+			.close {
+				display: flex;
+				padding: 16rpx 0;
+				border-top: 3rpx solid #eaeaea;
+				justify-content: center;
+				
+				text {
+					margin-left: 20rpx;
+				}
 			}
 		}
 	}

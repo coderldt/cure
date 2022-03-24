@@ -27,6 +27,11 @@ const routes = [
         component: () => import("@/views/system/article/index.vue"),
       },
       {
+        path: "/system/audio",
+        name: "systemAudio",
+        component: () => import("@/views/system/audio/index.vue"),
+      },
+      {
         path: "/question/bank",
         name: "questionBank",
         component: () => import("@/views/question/bank.vue"),
@@ -51,7 +56,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory("/cureAdmin"),
   routes,
 });
 
