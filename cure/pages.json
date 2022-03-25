@@ -69,6 +69,14 @@
 			}
 		},
 		{
+			"path":"pages/find/audio/index",
+			"style": {
+				"navigationBarTitleText": "推荐音乐",
+				"navigationBarBackgroundColor":"#3d6878",
+				"navigationBarTextStyle":"white"
+			}
+		},
+		{
 			"path": "pages/my/index",
 			"style": {
 				"navigationStyle":"custom"
@@ -84,6 +92,12 @@
 			"path": "pages/my/children/test",
 			"style": {
 				"navigationBarTitleText":"测试"
+			}
+		},
+		{
+			"path": "pages/my/children/audio",
+			"style": {
+				"navigationBarTitleText":"我的音乐"
 			}
 		},
 		{

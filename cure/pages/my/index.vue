@@ -38,6 +38,7 @@
 					{ label: '我发布的', icon: "coupon-fill", value: 'coupon' },
 					{ label: '我评论的', icon: "edit-pen-fill", value: 'editPen' },
 					{ label: '我收藏的', icon: "star-fill", value: 'star' },
+					{ label: '我的音乐', icon: "volume-fill", value: 'volume' },
 					{ label: '我的测试', icon: "file-text-fill", value: 'file' },
 					{ label: '退出登录', icon: "error-circle", value: 'loginOut' },
 					// { label: '设置', icon: "setting-fill", value: 'setting' },
@@ -100,6 +101,11 @@
 						break
 					case 'loginOut':
 						this.logOut()
+						break
+					case 'volume':
+						uni.navigateTo({
+							url:'/pages/my/children/audio'
+						})
 						break
 				}
 			},

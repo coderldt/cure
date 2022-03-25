@@ -37,3 +37,7 @@ export function delMyHistory(data) {
 export function getMyReply() {
 	return axios.post({ url: '/user/myReply' })
 }
+
+export function getMyAudio() {
+	return axios.post({ url: '/audio/getMyStarAudio' })
+}
