@@ -56,7 +56,6 @@
 		getBottleReplyList,
 		addReply,
 		delBottle
-		
 	} from '../../../apis/bottle/index.js'
 	export default {
 		props: {},

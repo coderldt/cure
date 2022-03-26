@@ -57,7 +57,7 @@
 			getDetail() {
 				const userinfo = uni.getStorageSync('userInfo')
 				if (userinfo) {
-					const { username, autograph, id } = JSON.parse(userinfo)
+					const { username, autograph, id, avatar } = JSON.parse(userinfo)
 					if (username) {
 						this.userInfo.username = (username || '')
 					}
@@ -65,7 +65,7 @@
 						this.userInfo.autograph = (autograph || '')
 					}
 					this.userInfo.id = id
-					this.defaultImg = this.userInfo.avatar
+					this.defaultImg = avatar
 				}
 			},
 			upload(val) {
@@ -75,7 +75,6 @@
 				this.isLoading = true
 				const res = await update(this.userInfo)
 				if (res.code === 200) {
-					console.log(this.userInfo);
 					uni.setStorageSync("userInfo", JSON.stringify(this.userInfo))
 					uni.showToast({
 						title:"信息更新成功",

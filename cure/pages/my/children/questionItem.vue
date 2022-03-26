@@ -66,7 +66,6 @@
 			}
 		},
 		created() {
-			console.log(this.title);
 			this.labels = (JSON.parse(uni.getStorageSync('labels')) || [])
 			this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
 		},

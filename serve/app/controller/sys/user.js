@@ -52,8 +52,10 @@ class UserController extends BaseController {
     const { ctx } = this;
     const { id, avatar, username, autograph } = ctx.request.body;
     if (!id) {
-      return this.error({ msg: '找不到该用户' });
+      return this.error({ data: '找不到该用户' });
     }
+
+    console.log(id, avatar, username, autograph);
 
     const params = { id, avatar, username, autograph };
     const res = await this.service.update(params);

@@ -1,6 +1,6 @@
 <template>
-	<view class="my" style="backgroundImage: url('/static/my/bgc.png')">
-		<view class="head" >
+	<view class="my" >
+		<view class="head" style="backgroundImage: url('/static/my/bgc2.jpg')">
 			<view class="avatar">
 				<u--image :src="userInfo.avatar" width="130rpx" height="130rpx" shape="circle" ></u--image>
 			</view>
@@ -19,7 +19,7 @@
 		</view>
 		<view class="options" v-for="(item, index) in list" @click="onOptions(item)" :key="index" >
 			<text class="icon">
-				<u-icon :name="item.icon" color="#6e6f70" size="25"></u-icon>
+				<u-icon :name="item.icon" color="#fcd515" size="25"></u-icon>
 			</text>
 			<text class="content">{{item.label}}</text>
 			<u-icon name="arrow-right" color="#b5b5b5" size="20"></u-icon>
@@ -68,7 +68,6 @@
 				const userinfo = uni.getStorageSync('userInfo')
 				this.userInfo = JSON.parse(userinfo)
 				this.userInfo.avatar = `${PROFIX_UPLOAD}${this.userInfo.avatar}`
-				console.log(this.userInfo.avatar);
 			},
 			async getLabel() {
 				const res = await getLabels()
@@ -127,14 +126,14 @@
 
 <style lang="scss" scoped>
 	.my {
-		padding: 200rpx 30rpx 0;
-		min-height: calc(100vh - 200rpx);
+		min-height: calc(100vh);
 		background-color: #f6f6f6;
-		background-size: contain;
-		background-repeat: no-repeat;
 		.head {
 			display: flex;
-			margin: 0rpx 30rpx 64rpx;
+			padding: 200rpx 60rpx 64rpx;
+			background-size: cover;
+			background-position: center; 
+			background-repeat: no-repeat;
 			
 			.avatar {
 				margin-right: 30rpx;
@@ -144,7 +143,7 @@
 				margin-bottom: 20rpx;
 				font-size: 40rpx;
 				font-weight: 700;
-				color: #48493c;
+				color: #fff;
 			}
 			
 			.autograph {
@@ -155,6 +154,7 @@
 			
 			.info {
 				flex: 1;
+				padding: 0 30rpx;
 			}
 			.right {
 				display: flex;
@@ -164,7 +164,8 @@
 		.options {
 			display: flex;
 			align-items: center;
-			margin-bottom: 30rpx;
+			margin: 30rpx;
+			// margin-bottom: 30rpx;
 			padding: 30rpx;
 			border-radius: 10rpx;
 			background-color: #FFFFFF;

@@ -24,13 +24,25 @@
 					<u-form-item label="标题" prop="title" borderBottom ref="item1">
 						<u--input v-model="replyPopup.title"  placeholder="请输入标题" ></u--input>
 					</u-form-item>
-					<u-form-item label="标签" prop="label" borderBottom ref="item1">
+					<u-form-item label="标签" prop="label" borderBottom ref="item1" :style="">
+						
 						<u-checkbox-group
 							v-model="replyPopup.label"
 							placement="row"
 						>
+							<!-- <u-row customStyle="margin-bottom: 10px" v-for="(item, index) in labelList" :key="index">
+								<u-col :span="6" v-for="(i, idx) in item" :key="idx">
+									<u-checkbox
+										:customStyle="{marginBottom: '4px'}"
+										:label="i.label"
+										:name="i.value"
+										v-model="replyPopup.label"
+									>
+									</u-checkbox>
+								</u-col>
+							</u-row> -->
 							<u-checkbox
-								:customStyle="{marginBottom: '8px'}"
+								:customStyle="{marginBottom: '4px'}"
 								v-for="(item, index) in labelList"
 								:key="index"
 								:label="item.label"
@@ -149,7 +161,12 @@
 			async getLabel() {
 				const res = await getLabels()
 				if (res.code === 200) {
+					// let i = 0
+					// for(i; i < res.data.length; i += 3) {
+					// 	this.labelList.push(res.data.slice(i, i + 3))
+					// }
 					this.labelList = res.data
+					console.log(res, this.labelList);
 					uni.setStorageSync("labels", JSON.stringify(res.data))
 				}
 			},
@@ -234,22 +251,16 @@
 				border-bottom: 2px solid #b4d1e1;
 			}
 		}
-
-		.content {
-			// flex: 1;
-			// height: calc(100vh - 144rpx);
-			// overflow-y: auto;
-		}
 	}
 
 	.replyPopop {
 		padding: 20rpx;
 		.u-checkbox-group {
 			flex-wrap: wrap;
+			flex-shrink: 1;
 			
 			.u-checkbox {
-				width: 24%;
-				margin-right: 1%;
+				width: 33%;
 			}
 		}
 

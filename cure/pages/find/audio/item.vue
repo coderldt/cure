@@ -1,7 +1,8 @@
 <template>
 	<view class="audioItem">
 		<view class="index">
-			{{index + 1}}
+			<u--image :src="current.logo" width="80rpx" height="80rpx" shape="circle" ></u--image>
+			<!-- {{index + 1}} -->
 		</view>
 		<view class="content" @click="onAudioClick">
 			<view class="name">
@@ -63,16 +64,9 @@
 		align-items: center;
 		padding: 30rpx 40rpx;
 		border-bottom: 4rpx solid #eaeaea;
-		// /deep/ .uni-audio-default {
-		// 	width: 760rpx;
-		// }
 		
 		.index {
 			margin-right: 40rpx;
-			color: #dc434d;
-			padding-bottom: 10rpx;
-			font-size: 38rpx;
-			border-bottom: 4rpx solid #8e8e8e;
 		}
 		
 		.content {

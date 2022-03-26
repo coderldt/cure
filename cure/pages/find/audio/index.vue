@@ -81,9 +81,9 @@
 			},
 			getListHeight() {
 				if (this.currentAudio) {
-					return { height: 'calc(100vh - 390rpx - 142rpx)' } 
+					return { height: 'calc(100vh - 390rpx - 47rpx)' } 
 				} else {
-					return  { height: 'calc(100vh - 390rpx)' } ;
+					return  { height: 'calc(100vh - 295rpx)' } ;
 				}
 			}
 		},
@@ -155,6 +155,7 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
+			background-color: #fff;
 			
 			/deep/ .uni-audio-default {
 				width: 750rpx;

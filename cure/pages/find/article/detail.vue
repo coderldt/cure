@@ -57,7 +57,6 @@
 				const userinfo = uni.getStorageSync('userInfo')
 				if (userinfo) {
 					this.userId = String(JSON.parse(userinfo).id)
-					console.log(this.userId);
 					this.getDetail(option.id)
 				}
 			} else {

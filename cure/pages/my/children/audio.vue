@@ -50,7 +50,7 @@
 			},
 			getListHeight() {
 				if (this.currentAudio) {
-					return { 'padding-bottom': '142rpx' } 
+					return { 'padding-bottom': '152rpx' } 
 				} else {
 					return  { 'padding-bottom': '0rpx' } ;
 				}
@@ -93,6 +93,7 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
+			background-color: #fff;
 			
 			/deep/ .uni-audio-default {
 				width: 750rpx;

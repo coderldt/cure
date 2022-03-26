@@ -97,7 +97,6 @@
 						})
 					})
 				}
-				console.log(this.subjectList);
 			},
 			groupChange(item) {
 				if (this.current !== this.subjectList.length - 1) {

@@ -19,14 +19,14 @@ class AudioController extends BaseController {
       },
     ];
 
-    const res = await this.service.multiTableQuery(querytables, [], { pageNum, pageSize: 5 });
+    const res = await this.service.multiTableQuery(querytables, [], { pageNum, pageSize: 10 });
     if (res.code === 200) {
       const { result, pageNum, total } = res.data;
 
       if (userId) {
         let sqlRes = null;
 
-        const sql = `select id, audioId from audioId where userId = ${userId}`;
+        const sql = `select id, audioId from user_audio where userId = '${userId}'`;
         sqlRes = await this.service.sql(sql);
 
         result.forEach(i => {
@@ -129,18 +129,19 @@ class AudioController extends BaseController {
       return this.error({ msg: '请选择一个音频' });
     }
 
+    console.log(this.ctx.userinfo, audioId);
     const { id } = this.ctx.userinfo;
     const params = {
       userId: id,
       audioId,
     };
-
     const resList = await this.userAudioService.query(params);
     if (resList.length) {
       await this.userAudioService.cDelData({ id: resList[0].id });
       this.success({ msg: '取消收藏成功' });
     } else {
       const res = await this.userAudioService.add(params);
+      console.log(res);
       if (res.code === 200) {
         this.success({ data: res.data, msg: '收藏成功' });
       } else {

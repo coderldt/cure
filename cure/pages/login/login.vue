@@ -2,7 +2,7 @@
 	<view class="wrap">
 		<view class="top"></view>
 		<view class="content">
-			<view class="title">欢迎登录治舆</view>
+			<view class="title">欢迎登录知愉</view>
 			<input class="u-border-bottom phone" type="number" v-model="tel" placeholder="请输入手机号" />
 			<input class="u-border-bottom password" type="password" v-model="password" placeholder="请输入密码" />
 			
@@ -14,8 +14,8 @@
 		<view class="buttom">
 			<view class="hint">
 				登录代表同意
-				<text class="link">治舆点评用户协议、隐私政策，</text>
-				并授权使用您的治舆信息（如昵称、头像）以便您统一管理。
+				<text class="link">知愉点评用户协议、隐私政策，</text>
+				并授权使用您的知愉信息（如昵称、头像）以便您统一管理。
 			</view>
 		</view>
 	</view>
@@ -56,7 +56,6 @@ export default {
 			if (res.code === 200) {
 				uni.setStorageSync('token', res.data.token)
 				uni.setStorageSync('userInfo', JSON.stringify(res.data.userInfo))
-				console.log(res.data);
 				uni.showToast({
 					title: res.msg,
 					duration: 1500,

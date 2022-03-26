@@ -102,7 +102,7 @@
 			button {
 				display: inline-block;
 				font-size: 20rpx;
-				padding: 0rpx 10rpx;
+				padding: 5rpx 20rpx;
 				border-radius: 40rpx;
 				line-height: 2.3em;
 				color: #fff;

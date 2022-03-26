@@ -4,7 +4,7 @@ const path = require("path");
 let Client = require("ssh2-sftp-client");
 // 打包 npm run build
 const compileDist = async () => {
-  if (shell.exec(`yarn build`).code === 0) {
+  if (shell.exec(`pnpm run build`).code === 0) {
     console.log("打包成功");
   }
 };
