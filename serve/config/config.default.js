@@ -55,7 +55,7 @@ module.exports = appInfo => {
       // username
       user: 'root',
       // password
-      password: 'coderltmysql228',
+      password: 'coderltmysql!@#',
       // database
       database: 'cure',
     },
