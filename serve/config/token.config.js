@@ -13,6 +13,7 @@ module.exports = {
     '/cureApi/reply/delete',
 
     '/cureApi/question/add',
+    '/cureApi/question/delete',
     '/cureApi/question/updateQuestion',
 
     '/cureApi/subject/randomTest',

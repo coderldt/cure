@@ -106,6 +106,7 @@
 					}
 					
 					.value {
+						flex: 1;
 						color: #b4b4b4;
 					}
 				}

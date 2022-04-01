@@ -8,10 +8,10 @@
 				{{item.username}}
 			</view>
 			<view class="content">
-				{{item.content}}
+				{{ item.content}}
 			</view>
 			<view class="title"  @click="detail">
-				{{item.title}}
+				{{ item.questionId ? item.title : '该问题已删除'}}
 			</view>
 			<view class="time">
 				{{item.createTime}}
@@ -45,10 +45,17 @@
 		methods: {
 			...mapMutations(['SAVE_TITLE']),
 			detail() {
-				this.SAVE_TITLE(this.item.title)
-				uni.switchTab({
-					url:`/pages/home/index`
-				})
+				if (this.item.questionId) {
+					this.SAVE_TITLE(this.item.title)
+					uni.switchTab({
+						url:`/pages/home/index`
+					})
+				} else {
+					uni.showToast({
+						title: '该问题已删除',
+						icon: "none"
+					})
+				}
 			},
 			async onTrash() {
 				this.$emit('onTrash', this.item)

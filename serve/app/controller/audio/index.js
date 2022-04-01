@@ -117,7 +117,7 @@ class AudioController extends BaseController {
     ];
     const res = await this.service.multiTableQuery(querytables, []);
     if (res.code === 200) {
-      this.success({ data: res.data });
+      this.success({ data: res.data.result.filter(i => i.audioId) });
     } else {
       this.error({ msg: '查询失败' });
     }

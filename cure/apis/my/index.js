@@ -15,6 +15,9 @@ export function getMyArticle() {
 export function getMyQuestion() {
 	return axios.post({ url: '/user/myQuestions' })
 }
+export function delMyQuestion(params) {
+	return axios.post({ url: '/question/delete', data: params })
+}
 
 // 测试
 export function getTestType() {

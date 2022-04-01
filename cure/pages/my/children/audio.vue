@@ -61,14 +61,14 @@
 				this.isloading = true
 				const res = await getMyAudio() 
 				if (res.code === 200) {
-					const newList = res.data.result.map(i => {
+					const newList = res.data.map(i => {
 						i.logo = `${PROFIX_UPLOAD}${i.logo}`
 						i.url = `${PROFIX_UPLOAD}${i.url}`
 						i.isStar = true
 						i.id = i.audioId
 						return i
 					})
-					this.list = res.data.result
+					this.list = newList
 				}
 				this.isloading = false
 			},
