@@ -1,0 +1,1 @@
+<audio src="{{current.url}}" id="{{$root.m0}}" poster="{{current.logo}}" name="{{current.name}}" action="{{audioAction}}" controls="{{true}}"></audio>

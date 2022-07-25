@@ -38,7 +38,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, reactive, Ref, ref, toRef, toRefs, watch } from "vue";
+import { defineComponent, onMounted, reactive, Ref, ref } from "vue";
 import { statusList } from "@/config/system";
 import { ElMessage } from "element-plus";
 import Edit from "./edit.vue";
@@ -53,11 +53,6 @@ export interface List {
   id?: string;
   title: string;
   content: string;
-}
-
-interface Dialog {
-  isEdit: boolean;
-  data: List;
 }
 
 interface Page {
@@ -144,7 +139,7 @@ export default defineComponent({
       const res: any = await del(id);
       if (res.code === 200) {
         ElMessage.success("删除成功");
-        getList();
+        await getList();
       } else {
         ElMessage.error("删除失败");
       }
@@ -166,7 +161,6 @@ export default defineComponent({
       total,
       // del,
       // rePass,
-      // dialog,
       onPaginationChange,
       tableColumn,
     };

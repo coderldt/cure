@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "我的评论",
+  "usingComponents": {
+    "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty",
+    "reply-item": "/pages/my/children/replyitem",
+    "loading": "/components/loading/index"
+  }
+}

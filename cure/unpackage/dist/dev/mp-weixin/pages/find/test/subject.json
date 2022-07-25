@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "测试题",
+  "navigationBarBackgroundColor": "#f8f7fc",
+  "usingComponents": {
+    "u-line-progress": "/uni_modules/uview-ui/components/u-line-progress/u-line-progress",
+    "u-radio-group": "/uni_modules/uview-ui/components/u-radio-group/u-radio-group",
+    "u-radio": "/uni_modules/uview-ui/components/u-radio/u-radio",
+    "u-button": "/uni_modules/uview-ui/components/u-button/u-button"
+  }
+}

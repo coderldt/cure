@@ -1,0 +1,1 @@
+<view data-event-opts="{{[['tap',[['addQuestion',['$event']]]]]}}" class="addQuestion data-v-51c3f5c4" bindtap="__e"><u-icon vue-id="0ca31fa8-1" name="edit-pen" color="#b1d9f1" size="28" class="data-v-51c3f5c4" bind:__l="__l"></u-icon><text class="data-v-51c3f5c4">提问</text></view>

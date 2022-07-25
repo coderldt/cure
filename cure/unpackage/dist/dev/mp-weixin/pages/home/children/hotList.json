@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty",
+    "item": "/pages/home/children/item",
+    "loading": "/components/loading/index"
+  }
+}

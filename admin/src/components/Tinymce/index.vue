@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onActivated, onMounted, Ref, ref, toRefs, watch } from "vue";
+import { defineComponent, onActivated, onMounted, Ref, ref, toRefs, watch, onDeactivated } from "vue";
 
 import Editor from "@tinymce/tinymce-vue";
 

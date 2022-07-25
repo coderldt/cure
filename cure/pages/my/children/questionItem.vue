@@ -23,11 +23,15 @@
 		<view class="desc u-line-2">
 			{{item.desc}}
 		</view>
+		<view class="control">
+			<text @click="handleDel">删除</text>
+		</view>
 	</view>
 </template>
 
 <script>
 	import { starUpdate, replyList, addReply } from "../../../apis/home/index.js"
+	import { delMyQuestion } from "../../../apis/my/index.js"
 	import { PROFIX_UPLOAD } from '../../../config/index.js'
 	import { mapMutations } from 'vuex'
 	export default {
@@ -76,6 +80,18 @@
 				uni.switchTab({
 					url:`/pages/home/index`
 				})
+			},
+			async handleDel() {
+				const res = await delMyQuestion({ id: this.item.id })
+				let self = this
+				if (res.code === 200) {
+					uni.showToast({
+						title:"删除成功",
+						success() {
+							self.$emit('refrensh')
+						}
+					})
+				}
 			}
 		}
 	}
@@ -137,6 +153,12 @@
 			font-size: 30rpx;
 			line-height: 1.5em;
 			color: #505050;
+		}
+		
+		.control {
+			text-align: right;
+			color: #959393;
+			font-size: 28rpx;
 		}
 	}
 </style>

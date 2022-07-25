@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "推荐文章",
+  "navigationBarBackgroundColor": "#6ab5ee",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-search": "/uni_modules/uview-ui/components/u-search/u-search",
+    "loading": "/components/loading/index",
+    "item": "/pages/find/article/item"
+  }
+}

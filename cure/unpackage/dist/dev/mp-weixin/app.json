@@ -1,0 +1,54 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/my/info",
+    "pages/find/index",
+    "pages/find/test/index",
+    "pages/find/test/subject",
+    "pages/find/test/result",
+    "pages/find/article/index",
+    "pages/find/bottle/index",
+    "pages/find/bottle/myBottle",
+    "pages/find/article/detail",
+    "pages/find/audio/index",
+    "pages/my/index",
+    "pages/my/children/question",
+    "pages/my/children/test",
+    "pages/my/children/audio",
+    "pages/my/children/star",
+    "pages/login/login",
+    "pages/login/register",
+    "pages/my/children/reply"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/find/index",
+        "text": "发现"
+      },
+      {
+        "pagePath": "pages/my/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {
+    "reply-list": "/pages/home/children/reply"
+  },
+  "sitemapLocation": "sitemap.json"
+}

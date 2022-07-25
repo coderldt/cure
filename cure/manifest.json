@@ -11,7 +11,7 @@
         "nvueStyleCompiler" : "uni-app",
         "compilerVersion" : 3,
         "splashscreen" : {
-            "alwaysShowBeforeRender" : true,
+            "alwaysShowBeforeRender" : false,
             "waiting" : true,
             "autoclose" : true,
             "delay" : 0
@@ -50,9 +50,9 @@
                 "androidStyle" : "default",
                 "useOriginalMsgbox" : true,
                 "android" : {
-                    "hdpi" : "C:/Users/lc/Downloads/微信图片_20220326200453.png",
-                    "xhdpi" : "C:/Users/lc/Downloads/微信图片_20220326200453.png",
-                    "xxhdpi" : "C:/Users/lc/Downloads/微信图片_20220326200453.png"
+                    "hdpi" : "C:/Users/chao.lv/Desktop/databaseCopy/微信图片_20220521112459 (1).png",
+                    "xhdpi" : "C:/Users/chao.lv/Desktop/databaseCopy/微信图片_20220521112459 (1).png",
+                    "xxhdpi" : "C:/Users/chao.lv/Desktop/databaseCopy/微信图片_20220521112459 (1).png"
                 }
             },
             "icons" : {

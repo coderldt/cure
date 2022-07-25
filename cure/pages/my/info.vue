@@ -26,6 +26,12 @@
 		    >
 				<u--textarea v-model="userInfo.autograph" maxlength="35" count placeholder="请输入个性签名" ></u--textarea>
 		    </u-collapse-item>
+			<u-collapse-item title="密码(可填)" name="Numerous tools">
+				<u--input placeholder="请输入密码" border="surround" v-model="userInfo.password" type="password"  ></u--input>
+				<view class="rePassword">
+				</view>
+				<u--input  placeholder="再次输入密码" border="surround" v-model="userInfo.rePassword" type="password" ></u--input>
+			</u-collapse-item>
 		  </u-collapse>
 		  <view class="submitBtn">
 			<u-button type="primary" :loading="isLoading" @click="submit">提交</u-button>
@@ -44,7 +50,9 @@
 			return {
 				userInfo: {
 					username: '',
-					autograph: ''
+					autograph: '',
+					password: "",
+					rePassword: ""
 				},
 				isLoading: false,
 				defaultImg: ""
@@ -56,6 +64,7 @@
 		methods: {
 			getDetail() {
 				const userinfo = uni.getStorageSync('userInfo')
+				console.log(userinfo);
 				if (userinfo) {
 					const { username, autograph, id, avatar } = JSON.parse(userinfo)
 					if (username) {
@@ -64,15 +73,26 @@
 					if (autograph) {
 						this.userInfo.autograph = (autograph || '')
 					}
+					if (avatar) {
+						this.userInfo.avatar = (avatar || '')
+					}
 					this.userInfo.id = id
 					this.defaultImg = avatar
 				}
+				console.log(this.defaultImg);
 			},
 			upload(val) {
 				this.userInfo.avatar = val
 			},
 			async submit() {
 				this.isLoading = true
+				if (this.userInfo.password && this.userInfo.rePassword && this.userInfo.password !== this.userInfo.rePassword) {
+					this.isLoading = false
+					return uni.showToast({
+						icon:'none',
+						title: '两次密码输入不一致'
+					})
+				}
 				const res = await update(this.userInfo)
 				if (res.code === 200) {
 					uni.setStorageSync("userInfo", JSON.stringify(this.userInfo))
@@ -111,6 +131,10 @@
 		.limit {
 			text-align: right;
 			color: #cfcfcf;
+		}
+		
+		.rePassword {
+			margin-top: 20rpx;
 		}
 	}
 </style>

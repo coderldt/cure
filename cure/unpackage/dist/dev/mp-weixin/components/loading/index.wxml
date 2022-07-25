@@ -1,0 +1,1 @@
+<view class="loading data-v-135a8cd8"><u-loading-icon vue-id="57f60c1c-1" mode="semicircle" show="{{isloading}}" class="data-v-135a8cd8" bind:__l="__l"></u-loading-icon></view>

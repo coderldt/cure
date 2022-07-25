@@ -1,4 +1,4 @@
-import { ref, Ref, InjectionKey } from "vue";
+import { InjectionKey } from "vue";
 
 interface Collapse {
   collapseStatus: boolean;

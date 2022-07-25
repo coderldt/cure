@@ -28,7 +28,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="desc u-line-2">
+		<view class="desc">
 			{{item.desc}}
 		</view>
 		<view class="count">
@@ -36,7 +36,7 @@
 			<text class="replying" @click="onReply(item)">回复评论</text>
 			<ReplyList class="reply" v-if="item.reply && item.reply.length" :replyList="item.reply" @frensh="frensh"></ReplyList>
 			<view class="close" @click="onClose(item)" v-if="item.reply && item.reply.length">
-				<u-icon name="arrow-up" color="#b1d6eb"></u-icon> 
+				<u-icon name="arrow-up" color="#b1d6eb"></u-icon>
 				<text>收起</text>
 			</view>
 		</view>
@@ -147,7 +147,7 @@
 					this.replyPopup.questionId = item.id
 					this.replyPlaceholder = `回复：${item.title}`
 					this.replyItem = item
-					this.show = true 
+					this.show = true
 				} else {
 					uni.showToast({
 						title: '登录后即可查看评论',
@@ -199,30 +199,30 @@
 			display: flex;
 			.msg {
 				flex: 1;
-				
+
 				.title {
 					margin-bottom: 20rpx;
 					font-size: 30rpx;
 					font-weight: 600;
 					color: #76a7d2;
 				}
-				
+
 				.labels {
 					display: flex;
 					font-size: 25rpx;
 					margin-bottom: 15rpx;
-					
+
 					.label {
 						padding: 5rpx 20rpx;
 						border-radius: 8rpx;
 						color: #FFFFFF;
 						margin-right: 20px;
 					}
-					
+
 					.label:nth-child(even) {
 						background-color: #80bef1;
 					}
-					
+
 					.label:nth-child(odd) {
 						background: linear-gradient(90deg, #feb48a, #ee618d);
 					}
@@ -233,13 +233,13 @@
 					font-size: 35rpx;
 					color: #da8145;
 					margin: 20rpx 0;
-					
+
 					.username {
 						margin-left: 20rpx;
 					}
 				}
 			}
-			
+
 			.similar {
 				font-size: 21rpx;
 				width: 72rpx;
@@ -249,12 +249,12 @@
 				border: 1px solid #95cbea;
 				border-radius: 20rpx;
 				padding: 20rpx;
-				
+
 				.similarCount {
 					margin-bottom: 10rpx;
 				}
 			}
-			
+
 			.similar.isStar {
 				background: #dbe967;
 				color: #fff;
@@ -267,27 +267,27 @@
 			line-height: 1.5em;
 			color: #505050;
 		}
-		
+
 		.count {
 			font-size: 28rpx;
 			font-weight: 600;
 			color: #b1d6eb;
-			
+
 			.reply {
 				padding-top: 20rpx;
 				border-top: 1px solid #eaeaea;
 			}
-			
+
 			.replying {
 				margin-left: 30rpx;
 			}
-			
+
 			.close {
 				display: flex;
 				padding: 16rpx 0;
 				border-top: 3rpx solid #eaeaea;
 				justify-content: center;
-				
+
 				text {
 					margin-left: 20rpx;
 				}

@@ -1,7 +1,7 @@
 <template>
 	<view class="myQuestion">
 		<view class="content">
-			<QuestionItem class="questionItem" v-for="(item, index) in questions" :key="index" :item="item"></QuestionItem>
+			<QuestionItem class="questionItem" v-for="(item, index) in questions" :key="index" :item="item" @refrensh="getQuestion"></QuestionItem>
 			<u-empty
 				class="empty"
 				mode="data"

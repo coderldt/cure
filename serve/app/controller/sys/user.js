@@ -50,14 +50,13 @@ class UserController extends BaseController {
 
   async update() {
     const { ctx } = this;
-    const { id, avatar, username, autograph } = ctx.request.body;
+    const { id, avatar, username, autograph, password } = ctx.request.body;
     if (!id) {
       return this.error({ data: '找不到该用户' });
     }
 
-    console.log(id, avatar, username, autograph);
-
     const params = { id, avatar, username, autograph };
+    password && (params.password = password)
     const res = await this.service.update(params);
     if (res.code === 200) {
       this.success({ msg: '更新成功', data: params });

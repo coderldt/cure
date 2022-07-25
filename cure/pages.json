@@ -6,7 +6,7 @@
 				"navigationBarTitleText": "社区-问题",
 				"navigationBarBackgroundColor":"#6ab5ee",
 				"navigationBarTextStyle":"white",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": false
 			}
 		},
 		{

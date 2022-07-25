@@ -49,13 +49,18 @@ class UserService extends BaseService {
     return res;
   }
 
-  async update({ id, avatar, username, autograph }) {
+  async update({ id, avatar, username, autograph, password }) {
     const params = {
       id,
       username,
       autograph,
-      avatar,
     };
+    if (password) {
+      params.password = password
+    }
+    if (avatar) {
+      params.avatar = avatar
+    }
 
     const res = await this.cUpdateData(params);
     return res;

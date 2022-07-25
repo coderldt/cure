@@ -12,11 +12,11 @@ const hanlderResponse = (res) => {
 				duration: 1500,
 				icon: "none",
 				success() {
-					// setTimeout(() => {
-					// 	uni.navigateTo({
-					// 		url: "/pages/login/index",
-					// 	})
-					// }, 2000)
+					setTimeout(() => {
+						uni.navigateTo({
+							url: "/pages/login/login",
+						})
+					}, 1000)
 				}
 			});
 			return

@@ -161,12 +161,7 @@
 			async getLabel() {
 				const res = await getLabels()
 				if (res.code === 200) {
-					// let i = 0
-					// for(i; i < res.data.length; i += 3) {
-					// 	this.labelList.push(res.data.slice(i, i + 3))
-					// }
 					this.labelList = res.data
-					console.log(res, this.labelList);
 					uni.setStorageSync("labels", JSON.stringify(res.data))
 				}
 			},

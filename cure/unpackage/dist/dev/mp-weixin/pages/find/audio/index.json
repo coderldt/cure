@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "推荐音乐",
+  "navigationBarBackgroundColor": "#3d6878",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty",
+    "audio": "/pages/find/audio/audio",
+    "audio-item": "/pages/find/audio/item",
+    "loading": "/components/loading/index"
+  }
+}

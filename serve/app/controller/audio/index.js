@@ -60,12 +60,12 @@ class AudioController extends BaseController {
 
   async add() { // 登录
     const { ctx } = this;
-    const { logo, name, url } = ctx.request.body;
+    const { logo, name, url, author } = ctx.request.body;
     if (!logo || !name || !url) {
       return this.error({ data: '参数缺失' });
     }
 
-    const res = await this.service.add({ logo, name, url });
+    const res = await this.service.add({ logo, name, url, author });
     if (res.code === 200) {
       this.success({ data: res.data, msg: '添加成功' });
     } else {
@@ -74,12 +74,12 @@ class AudioController extends BaseController {
   }
 
   async update() {
-    const { logo, name, url, id } = this.ctx.request.body;
+    const { logo, name, url, id, author } = this.ctx.request.body;
     if (!logo || !name || !url || !id) {
       return this.error({ data: '参数缺失' });
     }
 
-    const res = await this.service.update({ logo, name, url, id });
+    const res = await this.service.update({ logo, name, url, id, author });
     if (res.code === 200) {
       this.success({ data: res.data, msg: '修改成功' });
     } else {
@@ -111,13 +111,13 @@ class AudioController extends BaseController {
       },
       {
         table: 'sys_audio',
-        keys: [ 'logo', 'name', 'url' ],
+        keys: [ 'logo', 'name', 'url', 'author' ],
         leftJoinCon: [ 'sys_audio.id = user_audio.audioId' ],
       },
     ];
     const res = await this.service.multiTableQuery(querytables, []);
     if (res.code === 200) {
-      this.success({ data: res.data });
+      this.success({ data: res.data.result.filter(i => i.audioId) });
     } else {
       this.error({ msg: '查询失败' });
     }

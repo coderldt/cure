@@ -73,7 +73,7 @@
 				return this.subjectList[this.current]
 			},
 			isOk() {
-				return this.subjectList.every(i => i.answer)
+				return this.subjectList.every(i => String(i.answer))
 			},
 			getPercentage() {
 				return ((this.current + 1) / this.getTabs.length) * 100
